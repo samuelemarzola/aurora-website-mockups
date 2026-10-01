@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/colors.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/typography.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/base.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap">
+<script src="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#FAF7F2;-webkit-font-smoothing:antialiased}
+a{color:#191919;text-decoration:underline;text-underline-offset:4px}a:hover{color:#FF5560}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.14)}}
+@keyframes jugA{0%,100%{transform:translate(0,0)}25%{transform:translate(5px,-7px)}50%{transform:translate(10px,0)}75%{transform:translate(5px,3px)}}
+@keyframes jugB{0%,100%{transform:translate(0,0)}25%{transform:translate(-5px,3px)}50%{transform:translate(-10px,0)}75%{transform:translate(-5px,-7px)}}
+@keyframes beat{0%,60%,100%{transform:scale(1)}15%{transform:scale(1.22)}30%{transform:scale(.96)}45%{transform:scale(1.12)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+<div style="background:#FAF7F2;color:#191919;min-height:100vh;font-family:var(--font-text)">
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:100;pointer-events:none;background-image:url(assets/grain.png);background-size:180px;opacity:.07"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;height:84px;padding:0 clamp(24px,4vw,56px);display:flex;align-items:center;justify-content:space-between;gap:24px;gap:48px;background:{{ hdr.bg }};border-bottom:1px solid {{ hdr.line }};color:{{ hdr.fg }};backdrop-filter:blur(14px);transition:background .3s,color .3s">
+  <div onClick="{{ goHome }}" style="cursor:pointer;display:flex;align-items:center;height:84px">
+    <img src="{{ hdr.logo }}" alt="Aurora" style="height:24px;display:block">
+  </div>
+  <nav style="display:flex;align-items:center;gap:clamp(16px,2.4vw,44px);min-width:0;white-space:nowrap">
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+      <span onClick="{{ n.go }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid {{ n.line }}">{{ n.label }}</span>
+    </sc-for>
+    <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="outline" size="sm" color="{{ hdr.btn }}" onClick="{{ goJoin }}" hint-size="150px,34px">Lavora con noi</x-import>
+  </nav>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Home" style="position:relative;height:100vh;min-height:760px;color:#FAF7F2;overflow:hidden;background:#191919">
+    {{ heroReel }}
+    
+    <div style="position:absolute;left:56px;right:56px;bottom:108px;display:flex;flex-direction:column;gap:44px">
+      <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,min(10.6vw,17vh),184px);line-height:.88;letter-spacing:-.025em;max-width:13ch;text-wrap:balance">Representing creators <em style="font-style:italic;color:#FF5560">shaping culture</em></h1>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:32px;border-top:1px solid rgba(250,247,242,.45);padding-top:24px">
+        <div style="display:flex;flex-wrap:wrap;row-gap:10px;white-space:nowrap;gap:18px;align-items:center;font:500 13px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">
+          <span>Talent Management</span><span style="width:6px;height:6px;border-radius:50%;background:#FF5560"></span><span>Influencer Marketing</span><span style="width:6px;height:6px;border-radius:50%;background:#FF5560"></span><span>Production</span>
+        </div>
+        <div onClick="{{ goProduction }}" style="flex:none;white-space:nowrap;display:flex;align-items:center;gap:16px;cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">
+          <span>Guarda lo showreel</span>
+          <span style="width:52px;height:52px;border-radius:50%;border:1.5px solid #FAF7F2;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:12px solid #FAF7F2;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px"></span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 32%;height:64px;background:#FAF7F2"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-left:-1px;transform:scaleX(-1)"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#FAF7F2"></path></svg><div style="flex:1"></div></div>
+  <section style="display:flex;align-items:center;gap:56px;padding:34px 0 34px 56px;border-bottom:1px solid rgba(25,25,25,.14)">
+    <span style="flex:none;font:500 11px/1.3 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B;width:160px">Hanno scelto Aurora</span>
+    <div style="flex:1;min-width:0">{{ marquee }}</div>
+  </section>
+
+  <section style="padding:280px 56px 220px;display:flex;flex-direction:column;gap:200px">
+    <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px">
+      <div style="grid-column:1 / 10;display:flex;flex-direction:column;gap:40px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Chi siamo</span>
+        <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:clamp(44px,4.6vw,76px);line-height:1.04;letter-spacing:-.015em;text-wrap:pretty">Rappresentiamo creator e costruiamo con i brand progetti che partono <em>dai loro contenuti.</em></p>
+        <span onClick="{{ goTeam }}" style="cursor:pointer;align-self:flex-start;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;font-size:12px;text-decoration:underline;text-underline-offset:6px">Conosci il team</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:72px">
+      <sc-for list="{{ areas }}" as="a" hint-placeholder-count="3">
+        <div onClick="{{ a.go }}" style="cursor:pointer;display:flex;flex-direction:column;gap:22px;border-top:1px solid #191919;padding-top:24px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;color:#6B6B6B">{{ a.n }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:40px;line-height:1">{{ a.title }}</span>
+          <span style="font-size:17px;line-height:1.55;color:#4A4A4A;max-width:34ch;text-wrap:pretty">{{ a.text }}</span>
+          <span style="margin-top:auto;padding-top:8px;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">{{ a.cta }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section onMouseMove="{{ idxMove }}" onMouseLeave="{{ idxLeave }}" style="position:relative;padding:0 56px 240px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;gap:40px;border-top:1px solid #191919;padding-top:28px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Il roster · {{ talentCount }} talent</span>
+      <span onClick="{{ goTalent }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">Vedi la galleria</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;column-gap:26px;row-gap:2px">
+      <sc-for list="{{ index }}" as="t" hint-placeholder-count="22">
+        <span onClick="{{ t.open }}" onMouseEnter="{{ t.enter }}" style="display:inline-flex;align-items:flex-start;gap:10px;cursor:pointer;color:{{ t.col }};transition:color .25s cubic-bezier(.22,1,.36,1)">
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(44px,5.6vw,96px);line-height:1.06;letter-spacing:-.015em;white-space:nowrap">{{ t.name }}</span>
+          <span style="font:500 10px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;margin-top:.9em">{{ t.vertical }}</span>
+        </span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF5560;flex:none"></span>
+      </sc-for>
+      <span onClick="{{ goTalent }}" style="cursor:pointer;font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:clamp(44px,5.6vw,96px);line-height:1.06;color:#9B9B9B" style-hover="color:#FF5560">e altri {{ moreCount }}</span>
+    </div>
+    <div style="position:absolute;left:{{ fp.x }}px;top:{{ fp.y }}px;width:280px;aspect-ratio:4/5;border-radius:15px;background:{{ fp.bg }};opacity:{{ fp.o }};transform:translate(28px,-55%) rotate(-3deg) scale({{ fp.s }});pointer-events:none;overflow:hidden;z-index:5;transition:opacity .25s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1)">
+      <img src="{{ fp.photo }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%">
+      
+    </div>
+  </section>
+
+  <section style="padding:0 0 240px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin:0 56px 72px;gap:40px">
+      <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em">I nostri lavori</h2>
+      <span onClick="{{ goWorks }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px;padding-bottom:12px">Tutti i progetti</span>
+    </div>
+    <div onClick="{{ feat.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:32px">
+      <div style="height:82vh;min-height:560px;margin:0 56px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:24px">
+        <div style="position:relative;overflow:hidden;background:#DCE2EA;border-radius:15px">
+          {{ featGlobe }}
+          <span style="position:absolute;left:32px;top:30px;z-index:3;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Case study 01</span>
+        </div>
+        <div style="position:relative;overflow:hidden;background:{{ feat.leadBg }};border-radius:15px">
+          <img src="{{ feat.lead }}" alt="{{ feat.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;padding:0 56px">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">{{ feat.client }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.95;letter-spacing:-.01em">{{ feat.title }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;justify-content:flex-end">
+          <span style="font-size:17px;line-height:1.55;color:#4A4A4A;max-width:44ch">{{ feat.goal }}</span>
+          <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Con {{ feat.creatorNames }}</span>
+        </div>
+      </div>
+    </div>
+      </section>
+
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 58%"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-right:-1px"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#191919"></path></svg><div style="flex:1;height:64px;background:#191919"></div></div>
+  <section id="production" style="position:relative;overflow:hidden;background:#191919;color:#FAF7F2;padding:200px 56px 200px">
+    
+    {{ prodGlobe }}
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;gap:40px;margin-bottom:96px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#9B9B9B">Aurora Production</span>
+      <div style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end">
+        <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em">Dall'idea <em>al set.</em></h2>
+        <div style="display:flex;flex-direction:column;gap:28px;align-items:flex-start;padding-bottom:10px">
+          <p style="margin:0;font-size:19px;line-height:1.55;color:rgba(250,247,242,.72);max-width:40ch">Aurora Production realizza i contenuti dei nostri talent e dei brand con cui lavorano. Una squadra interna, dal soggetto al montaggio.</p>
+          <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="outline" size="sm" color="bianco" onClick="{{ goProduction }}" hint-size="220px,34px">Scopri Aurora Production</x-import>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:2;aspect-ratio:16/9;overflow:hidden;border-radius:15px;background:#242424">
+      <img src="assets/talent-08.jpg" alt="Showreel" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.62)">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px">
+        <span style="width:104px;height:104px;border-radius:50%;border:1.5px solid #FAF7F2;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:22px solid #FAF7F2;border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px"></span></span>
+        <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Showreel 2026 · in produzione</span>
+      </div>
+    </div>
+      </section>
+</sc-if>
+
+<sc-if value="{{ isTalent }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Talent" style="padding:200px 56px 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:end">
+    <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Il roster</h1>
+    <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#4A4A4A">{{ talentCount }} creator, cinque verticalità. Li scegliamo per come raccontano, prima che per quanti li seguono.</p>
+  </section>
+  <div style="position:sticky;top:84px;z-index:20;background:rgba(250,247,242,.94);backdrop-filter:blur(14px);padding:18px 56px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid rgba(25,25,25,.14)">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="6">
+      <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="sm" color="#191919" variant="{{ f.variant }}" onClick="{{ f.pick }}" hint-size="100px,34px">{{ f.label }}</x-import>
+    </sc-for>
+    <span style="margin-left:auto;white-space:nowrap;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">{{ shownCount }} risultati</span>
+  </div>
+  <section style="padding:48px 56px 180px;column-count:{{ cols }};column-gap:24px">
+    <sc-for list="{{ gallery }}" as="t" hint-placeholder-count="8">
+      <div onClick="{{ t.open }}" onMouseEnter="{{ t.enter }}" onMouseLeave="{{ t.leave }}" style="break-inside:avoid;margin-bottom:24px;position:relative;overflow:hidden;border-radius:15px;cursor:pointer;background:{{ t.bg }};transition:background .6s cubic-bezier(.22,1,.36,1);aspect-ratio:{{ t.ar }}">
+        <img src="{{ t.photo }}" alt="{{ t.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ t.pos }};transform:scale({{ t.sc }});transform-origin:center bottom;transition:transform .7s cubic-bezier(.22,1,.36,1)">
+        
+        <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex;pointer-events:none"><div style="width:68px;height:36px;background:#FAF7F2;display:flex;align-items:center;gap:7px"><span style="width:13px;height:13px;border-radius:50%;background:{{ t.dot }}"></span><span style="width:13px;height:13px;border-radius:50%;background:{{ t.dot }}"></span></div><svg width="47" height="36" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
+        <div style="position:absolute;left:14px;right:14px;bottom:14px;z-index:3;box-sizing:border-box;align-items:flex-start;text-align:left;display:flex;flex-direction:column;gap:8px;padding:12px 14px 11px;border-radius:15px;background:#FAF7F2;color:#191919;opacity:{{ t.ov }};transform:translateY({{ t.tyb }}px);transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1)">
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(22px,2vw,30px);line-height:1;text-wrap:balance">{{ t.name }}</span>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ t.vertical }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isTalentDetail }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Scheda talent" style="padding:124px 56px 160px;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:80px;align-items:start">
+    <div style="position:sticky;top:108px;aspect-ratio:4/5;background:{{ tal.bg }};overflow:hidden;border-radius:15px">
+      <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex;pointer-events:none"><div style="width:112px;height:60px;background:#FAF7F2;display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:50%;background:{{ tal.bg }}"></span><span style="width:20px;height:20px;border-radius:50%;background:{{ tal.bg }}"></span></div><svg width="78" height="60" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
+      <img src="{{ tal.photo }}" alt="{{ tal.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ tal.pos }}">
+      
+      {{ detailRing }}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:56px;padding-top:48px">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span onClick="{{ goTalent }}" style="cursor:pointer;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Talent / <span style="color:#FF5560">{{ tal.vertical }}</span></span>
+        <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,7.4vw,128px);line-height:.88;letter-spacing:-.02em">{{ tal.name }}</h1>
+        <p style="margin:0;font-size:19px;line-height:1.55;color:#4A4A4A;max-width:40ch">{{ tal.bio }}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <sc-for list="{{ tal.stats }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #191919;padding-top:18px">
+              <span style="font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.9">{{ s.n }}</span>
+              <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ s.l }}</span>
+            </div>
+          </sc-for>
+        </div>
+        
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ tal.stats }}" as="s" hint-placeholder-count="3">
+          <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="outline" size="sm" color="#191919" hint-size="120px,34px">{{ s.l }}</x-import>
+        </sc-for>
+        <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="solid" size="sm" color="#FF5560" onClick="{{ goContact }}" hint-size="200px,34px">Richiedi disponibilità</x-import>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Collaborazioni</span>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(25,25,25,.14)">
+          <sc-for list="{{ collabs }}" as="b" hint-placeholder-count="6">
+            <div style="height:96px;display:flex;align-items:center;border-bottom:1px solid rgba(25,25,25,.14);padding-right:32px"><img src="{{ b.src }}" alt="" style="max-width:110px;max-height:40px;object-fit:contain;filter:{{ b.f }};opacity:.85;mix-blend-mode:multiply"></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 58%"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-right:-1px"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#DCE2EA"></path></svg><div style="flex:1;height:64px;background:#DCE2EA"></div></div>
+  <section style="background:#DCE2EA;padding:140px 56px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:80px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:28px;max-width:560px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Best practice · {{ talCase.client }}</span>
+      <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(56px,6vw,96px);line-height:.92;letter-spacing:-.015em">{{ talCase.title }}</h2>
+      <p style="margin:0;font-size:18px;line-height:1.55;color:#4A4A4A">{{ talCase.goal }}</p>
+      <div style="display:flex;gap:40px">
+        <sc-for list="{{ talCase.results }}" as="r" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Instrument Serif',Georgia,serif;font-size:48px;line-height:1">{{ r.n }}</span><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ r.l }}</span></div>
+        </sc-for>
+      </div>
+      <span onClick="{{ talCase.open }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">Leggi il case study</span>
+    </div>
+    <div style="width:380px;aspect-ratio:9/16;position:relative;overflow:hidden;background:{{ tal.bg }};border-radius:18px">
+      <img src="{{ tal.photo }}" alt="Video ADV" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:brightness(.7)">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#FAF7F2">
+        <span style="width:80px;height:80px;border-radius:50%;border:1.5px solid #FAF7F2;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:18px solid #FAF7F2;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px"></span></span>
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Video ADV · embed</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:140px 56px 0;display:flex;flex-direction:column;gap:32px">
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Gallery</span>
+    <div style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:24px;align-items:end">
+      <sc-for list="{{ talGallery }}" as="g" hint-placeholder-count="3">
+        <div style="aspect-ratio:{{ g.ar }};position:relative;overflow:hidden;background:{{ g.bg }}">
+          <img src="{{ g.src }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ g.pos }}">
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section onClick="{{ nextTal.open }}" style="cursor:pointer;margin:140px 56px 160px;padding-top:28px;border-top:1px solid #191919;display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Prossimo talent · <span style="color:#FF5560">{{ nextTal.vertical }}</span></span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em" style-hover="color:#FF5560">{{ nextTal.name }}</span>
+    </div>
+    <div style="flex:none;width:200px;aspect-ratio:4/5;position:relative;overflow:hidden;border-radius:15px;background:{{ nextTal.bg }}">
+      <img src="{{ nextTal.photo }}" alt="{{ nextTal.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ nextTal.pos }}">
+      
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isWorks }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Lavori" style="padding:200px 56px 120px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:end">
+    <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Lavori</h1>
+    <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#4A4A4A">Quattro progetti recenti. Per ognuno: obiettivo, creator coinvolti, contenuti e risultati.</p>
+  </section>
+  <section style="padding:0 56px 100px;display:flex;flex-direction:column;gap:140px">
+    <sc-for list="{{ cases }}" as="c" hint-placeholder-count="4">
+      <div onClick="{{ c.open }}" style="cursor:pointer;display:grid;grid-template-columns:{{ c.cols }};gap:64px;align-items:end">
+        <div style="order:{{ c.imgOrder }};aspect-ratio:4/3;position:relative;overflow:hidden;border-radius:15px;background:{{ c.bg }}">
+          <img src="{{ c.cover }}" alt="{{ c.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ c.fit }};object-position:{{ c.pos }}">
+        </div>
+        <div style="order:2;display:flex;flex-direction:column;gap:22px;padding-bottom:8px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">{{ c.num }} · {{ c.client }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(48px,4.8vw,80px);line-height:.92;letter-spacing:-.01em">{{ c.title }}</span>
+          <span style="font-size:17px;line-height:1.55;color:#4A4A4A;max-width:40ch">{{ c.goal }}</span>
+          <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Con {{ c.creatorNames }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isCase }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Case study" style="position:relative;height:92vh;min-height:680px;overflow:hidden;background:{{ cs.bg }};color:{{ cs.fg }}">
+    <div style="position:absolute;top:{{ cs.pad }};right:{{ cs.pad }};bottom:{{ cs.pad }};width:{{ cs.iw }};overflow:hidden;border-radius:{{ cs.rad }};background:{{ cs.panelBg }}"><img src="{{ cs.cover }}" alt="{{ cs.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ cs.fit }};object-position:{{ cs.heroPos }}"></div>
+    <div style="position:absolute;inset:0;background:{{ cs.scrim }}"></div>
+    {{ caseGlobe }}
+    <div style="position:absolute;left:56px;right:56px;bottom:56px;display:flex;flex-direction:column;gap:24px">
+      <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Case study · {{ cs.client }}</span>
+      <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(84px,10vw,176px);line-height:.88;letter-spacing:-.025em;max-width:10ch">{{ cs.title }}</h1>
+    </div>
+  </section>
+  <section style="padding:120px 56px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #191919;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Cliente</span><span style="font-size:18px;line-height:1.5">{{ cs.client }}</span></div>
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #191919;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Obiettivo</span><span style="font-size:18px;line-height:1.5">{{ cs.goal }}</span></div>
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #191919;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Creator coinvolti</span>
+      <sc-for list="{{ cs.creators }}" as="k" hint-placeholder-count="2"><span onClick="{{ k.open }}" style="cursor:pointer;font-size:18px;line-height:1.5;text-decoration:underline;text-underline-offset:4px">{{ k.name }}</span></sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #191919;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Contenuti realizzati</span>
+      <sc-for list="{{ cs.contents }}" as="x" hint-placeholder-count="3"><span style="font-size:18px;line-height:1.5">{{ x }}</span></sc-for>
+    </div>
+  </section>
+  <section style="padding:0 56px 140px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px">
+    <sc-for list="{{ cs.results }}" as="r" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(88px,9vw,152px);line-height:.85;letter-spacing:-.02em">{{ r.n }}</span>
+        <span style="display:flex;align-items:center;gap:10px;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase"><span style="width:6px;height:6px;border-radius:50%;background:#FF5560"></span>{{ r.l }}</span>
+      </div>
+    </sc-for>
+  </section>
+  <section style="padding:0 56px;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end">
+    <sc-for list="{{ cs.media }}" as="m" hint-placeholder-count="3">
+      <div style="aspect-ratio:{{ m.ar }};position:relative;overflow:hidden;background:{{ m.bg }}">
+        <img src="{{ m.src }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ m.pos }};filter:brightness(.78)">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#FAF7F2">
+          <span style="width:64px;height:64px;border-radius:50%;border:1.5px solid #FAF7F2;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:14px solid #FAF7F2;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></span></span>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ m.label }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+  <section onClick="{{ nextCase.open }}" style="cursor:pointer;padding:160px 56px;display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Prossimo progetto</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em" style-hover="color:#FF5560">{{ nextCase.title }}</span>
+    </div>
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;padding-bottom:14px">{{ nextCase.client }}</span>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Contatti" style="padding:200px 56px 160px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:120px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:64px">
+      <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Parliamo<span style="color:#FF5560">.</span></h1>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:40px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Chi sei</span>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <sc-for list="{{ ctypes }}" as="c" hint-placeholder-count="4">
+                <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="md" color="#191919" variant="{{ c.variant }}" onClick="{{ c.pick }}" hint-size="130px,44px">{{ c.label }}</x-import>
+              </sc-for>
+            </div>
+            <span style="font-size:15px;color:#4A4A4A">Sei un creator o vuoi entrare nel team? <span onClick="{{ goJoin }}" style="cursor:pointer;text-decoration:underline;text-underline-offset:4px;color:#191919">Lavora con noi</span></span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Nome e cognome" tone="light" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Email" type="email" tone="light" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="{{ orgLabel }}" tone="light" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Budget o periodo (facoltativo)" tone="light" hint-size="100%,72px"></x-import>
+          </div>
+          <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Raccontaci il progetto" tone="light" hint-size="100%,72px"></x-import>
+          <div><x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="lg" variant="solid" color="#FF5560" onClick="{{ send }}" hint-size="160px,56px">Invia</x-import></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px;border-top:1px solid #191919;padding-top:28px">
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:56px;line-height:1">Grazie. Ti rispondiamo entro 48 ore.</span>
+          <span onClick="{{ reset }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">Invia un altro messaggio</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:40px;padding-top:40px;min-width:0">
+      <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(25,25,25,.2);padding-top:18px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">{{ c.l }}</span>
+          <span style="font-size:18px;line-height:1.5;overflow-wrap:anywhere">{{ c.v }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isProduction }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Production" style="position:relative;overflow:hidden;background:#191919;color:#FAF7F2;padding:200px 56px 140px">
+    
+    {{ prodPageGlobe }}
+    <div style="position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#9B9B9B">Aurora Production</span>
+        <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,12vw,208px);line-height:.85;letter-spacing:-.03em">Dall'idea <em>al set.</em></h1>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:28px;align-items:flex-start;padding-bottom:18px">
+        <p style="margin:0;font-size:19px;line-height:1.55;color:rgba(250,247,242,.72);max-width:40ch">Scriviamo, giriamo e montiamo contenuti per i nostri talent e per i brand con cui lavorano. Una squadra interna, dal soggetto alla consegna.</p>
+        <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="solid" size="md" color="#FF5560" onClick="{{ goContact }}" hint-size="220px,44px">Proponi un progetto</x-import>
+      </div>
+    </div>
+    <div style="position:relative;z-index:2;margin-top:96px;aspect-ratio:16/9;overflow:hidden;border-radius:15px;background:#242424">
+      <img src="assets/talent-09.jpg" alt="Showreel" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(.6)">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px">
+        <span style="width:112px;height:112px;border-radius:50%;border:1.5px solid #FAF7F2;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:25px solid #FAF7F2;border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:7px"></span></span>
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;font-size:12px">Showreel 2026 · in produzione</span>
+      </div>
+    </div>
+  </section>
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 32%;height:64px;background:#FAF7F2"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-left:-1px;transform:scaleX(-1)"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#FAF7F2"></path></svg><div style="flex:1"></div></div>
+  <section style="padding:140px 56px 160px;display:flex;flex-direction:column;gap:56px">
+    <div style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end;border-top:1px solid #191919;padding-top:28px">
+      <div style="display:flex;flex-direction:column;gap:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">01 · Backstage</span><h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(56px,6vw,96px);line-height:.92;letter-spacing:-.015em">Dietro le quinte</h2></div>
+      <p style="margin:0 0 8px;font-size:17px;line-height:1.55;color:#4A4A4A;max-width:40ch">Shooting, set di campagna ed eventi raccontati da chi c'era. Materiale pronto per i canali del brand e del talent.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:24px;align-items:end">
+      <sc-for list="{{ backstage }}" as="g" hint-placeholder-count="3">
+        <div style="aspect-ratio:{{ g.ar }};position:relative;overflow:hidden;border-radius:15px;background:{{ g.bg }}">
+          <img src="{{ g.src }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ g.pos }}">
+          
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 58%"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-right:-1px"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#DCE2EA"></path></svg><div style="flex:1;height:64px;background:#DCE2EA"></div></div>
+  <section style="background:#DCE2EA;padding:140px 56px 160px;display:flex;flex-direction:column;gap:56px">
+    <div style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end;border-top:1px solid #191919;padding-top:28px">
+      <div style="display:flex;flex-direction:column;gap:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">02 · Podcast</span><h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(56px,6vw,96px);line-height:.92;letter-spacing:-.015em">Format condotti dai talent</h2></div>
+      <p style="margin:0 0 8px;font-size:17px;line-height:1.55;color:#4A4A4A;max-width:40ch">Audio e video, registrati nel nostro studio di Milano e distribuiti su Spotify e YouTube.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+      <sc-for list="{{ podcasts }}" as="p" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="aspect-ratio:1/1;position:relative;overflow:hidden;border-radius:15px;background:{{ p.bg }}">
+            <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:68px;height:36px;background:#DCE2EA;display:flex;align-items:center;gap:7px"><span style="width:13px;height:13px;border-radius:50%;background:{{ p.bg }}"></span><span style="width:13px;height:13px;border-radius:50%;background:{{ p.bg }}"></span></div><svg width="47" height="36" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#DCE2EA"></path></svg></div>
+            <img src="{{ p.photo }}" alt="{{ p.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%">
+            
+          </div>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:36px;line-height:1">{{ p.title }}</span>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#4A4A4A">Con {{ p.host }} · {{ p.eps }} episodi</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 32%;height:64px;background:#FAF7F2"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-left:-1px;transform:scaleX(-1)"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#FAF7F2"></path></svg><div style="flex:1"></div></div>
+  <section style="padding:140px 56px 160px;display:flex;flex-direction:column;gap:56px">
+    <div style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end;border-top:1px solid #191919;padding-top:28px">
+      <div style="display:flex;flex-direction:column;gap:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">03 · Produzioni video</span><h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(56px,6vw,96px);line-height:.92;letter-spacing:-.015em">Spot, serie, branded content</h2></div>
+      <p style="margin:0 0 8px;font-size:17px;line-height:1.55;color:#4A4A4A;max-width:40ch">Dal soggetto alla post-produzione, con formati pensati per ogni piattaforma.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 24px">
+      <sc-for list="{{ videos }}" as="v" hint-placeholder-count="4">
+        <div onClick="{{ v.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:18px">
+          <div style="aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:15px;background:{{ v.bg }}">
+            <img src="{{ v.cover }}" alt="{{ v.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ v.fit }};object-position:{{ v.pos }};filter:brightness(.85)">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span style="width:72px;height:72px;border-radius:50%;border:1.5px solid #FAF7F2;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:16px solid #FAF7F2;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px"></span></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px">
+            <span style="font-family:'Instrument Serif',Georgia,serif;font-size:36px;line-height:1">{{ v.title }}</span>
+            <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B;white-space:nowrap">{{ v.format }}</span>
+          </div>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">{{ v.client }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Team" style="padding:220px 56px 160px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:end">
+    <h1 style="grid-column:1 / 8;margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Il <em>team</em></h1>
+    <p style="grid-column:9 / 13;margin:0 0 18px;font-size:18px;line-height:1.55;color:#4A4A4A">Un gruppo piccolo, a Milano. Seguiamo ogni talent e ogni progetto dall'inizio alla fine, senza passaggi di mano.</p>
+  </section>
+  <section style="padding:0 56px 220px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;row-gap:96px">
+    <sc-for list="{{ team }}" as="m" hint-placeholder-count="6">
+      <div style="display:flex;flex-direction:column;gap:22px;margin-top:{{ m.mt }}px">
+        <div style="aspect-ratio:4/5;position:relative;overflow:hidden;border-radius:15px;background:#EAEEF2">
+          <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:68px;height:36px;background:#FAF7F2;display:flex;align-items:center;gap:7px"><span style="width:13px;height:13px;border-radius:50%;background:{{ m.c }}"></span><span style="width:13px;height:13px;border-radius:50%;background:{{ m.c }}"></span></div><svg width="47" height="36" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
+          <span style="position:absolute;left:0;right:0;bottom:28px;text-align:center;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#9B9B9B">Ritratto B/N</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:40px;line-height:1">Nome Cognome</span>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">{{ m.role }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+  <section style="padding:0 56px 220px;display:flex;flex-direction:column;gap:72px">
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B;border-top:1px solid #191919;padding-top:28px">Come lavoriamo</span>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:72px">
+      <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <span style="display:flex;gap:6px"><span style="width:12px;height:12px;border-radius:50%;background:{{ v.c }}"></span><span style="width:12px;height:12px;border-radius:50%;background:{{ v.c }}"></span></span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(48px,4.6vw,72px);line-height:.95;letter-spacing:-.01em">{{ v.t }}</span>
+          <span style="font-size:17px;line-height:1.55;color:#4A4A4A;max-width:32ch;text-wrap:pretty">{{ v.d }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section onClick="{{ goJoin }}" style="cursor:pointer;margin:0 56px 200px;padding-top:28px;border-top:1px solid #191919;display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Posizioni aperte</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em" style-hover="color:#FF5560">Lavora <em>con noi</em></span>
+    </div>
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;font-size:12px;text-decoration:underline;text-underline-offset:6px;padding-bottom:14px">Vedi le posizioni</span>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isJoin }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Lavora con noi" style="padding:200px 56px 96px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:end">
+    <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,12vw,208px);line-height:.85;letter-spacing:-.03em">Lavora <em>con noi</em></h1>
+    <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#4A4A4A">Cerchiamo creator con un punto di vista e persone che vogliono costruire con loro. Due strade, stessa cura.</p>
+  </section>
+  <section style="padding:0 56px 180px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch">
+    <div style="position:relative;overflow:hidden;border-radius:15px;background:#8888D3;padding:88px 48px 48px;display:flex;flex-direction:column;gap:32px">
+      <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:112px;height:60px;background:#FAF7F2;display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:50%;background:#8888D3"></span><span style="width:20px;height:20px;border-radius:50%;background:#8888D3"></span></div><svg width="78" height="60" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
+      
+      <div style="position:relative;display:flex;flex-direction:column;gap:18px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Per i creator</span>
+        <span style="font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.95">Entra nel roster</span>
+        <span style="font-size:17px;line-height:1.55;max-width:42ch">Mandaci i tuoi profili e due contenuti che ti rappresentano. Rispondiamo a ogni candidatura entro due settimane.</span>
+      </div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Nome e cognome" tone="light" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Profilo principale (link)" tone="light" hint-size="100%,72px"></x-import>
+        <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Verticalità" tone="light" hint-size="100%,72px"></x-import>
+      </div>
+      <div style="position:relative;margin-top:auto"><x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="lg" variant="solid" color="#191919" hint-size="180px,56px">Candidati</x-import></div>
+    </div>
+    <div style="position:relative;overflow:hidden;border-radius:15px;background:#DCE2EA;padding:88px 48px 48px;display:flex;flex-direction:column;gap:32px">
+      <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:112px;height:60px;background:#FAF7F2;display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:50%;background:#DCE2EA"></span><span style="width:20px;height:20px;border-radius:50%;background:#DCE2EA"></span></div><svg width="78" height="60" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Per il team</span>
+        <span style="font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.95">Posizioni aperte</span>
+        <span style="font-size:17px;line-height:1.55;color:#4A4A4A;max-width:42ch">Lavoriamo in presenza a Milano, in un gruppo piccolo dove ognuno segue i progetti dall'inizio alla fine.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;border-top:1px solid #191919">
+        <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="4">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 0;border-bottom:1px solid rgba(25,25,25,.16);cursor:pointer" style-hover="color:#FF5560">
+            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Instrument Serif',Georgia,serif;font-size:30px;line-height:1">{{ j.role }}</span><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#4A4A4A">{{ j.meta }}</span></div>
+            <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;font-size:12px;text-decoration:underline;text-underline-offset:6px">Candidati</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="margin-top:auto;font-size:15px;color:#4A4A4A">Candidatura spontanea: careers@auroratalentagency.it</span>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}">
+  <div aria-hidden="true" style="position:relative;z-index:4;display:flex;align-items:flex-end;height:64px;margin-top:-64px;pointer-events:none"><div style="flex:0 0 32%;height:64px;background:#FF5560"></div><svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;display:block;margin-left:-1px;transform:scaleX(-1)"><path d="M0,64 Q13,64 17,55 L41,9 Q46,0 58,0 L64,0 L64,64 Z" fill="#FF5560"></path></svg><div style="flex:1"></div></div>
+  <section onClick="{{ goContact }}" style="position:relative;overflow:hidden;cursor:pointer;background:#FF5560;color:#191919;padding:140px 56px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:end">
+    
+    <span style="position:relative;font-family:'Instrument Serif',Georgia,serif;font-size:clamp(84px,10vw,176px);line-height:.88;letter-spacing:-.025em;max-width:11ch">Parliamo del prossimo <em>progetto.</em></span>
+    <div style="position:relative;display:flex;flex-direction:column;gap:14px;padding-bottom:14px;font-size:18px">
+      <span>brand@auroratalentagency.it</span>
+      <span>talent@auroratalentagency.it</span>
+    </div>
+  </section>
+</sc-if>
+
+<footer style="padding:80px 56px 40px;display:flex;flex-direction:column;gap:64px;overflow:hidden">
+  <div style="display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <img src="assets/logo-black.png" alt="Aurora" style="height:24px;width:auto;align-self:flex-start">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6B6B6B">Quality over quantity</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4"><span onClick="{{ n.go }}" style="cursor:pointer;font-size:16px" style-hover="color:#FF5560">{{ n.label }}</span></sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
+      <span>Instagram</span><span>TikTok</span><span>YouTube</span><span>LinkedIn</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
+      <span>Via Francesco Albani 55</span><span>20148 Milano (MI)</span><span>(+39) 3469742330</span>
+    </div>
+  </div>
+  <div style="margin:0 -56px">
+    <x-import component-from-global-scope="AuroraDesignSystem_0854e8.WordmarkPattern" rows="{{ 2 }}" size="{{ 132 }}" color="#191919" accent="#FF5560" highlight="{{ wmHl }}" hint-size="100%,280px"></x-import>
+  </div>
+  <div style="display:flex;justify-content:space-between;gap:24px;border-top:1px solid rgba(25,25,25,.14);padding-top:24px;font-size:13px;color:#6B6B6B">
+    <span>Aurora S.r.l. · Via Francesco Albani 55, 20148 Milano (MI) · P.IVA 12772100967 · PEC aurora.agency@pec.it</span>
+    <div style="display:flex;align-items:center;gap:28px"><span style="display:inline-flex;align-items:center;gap:8px">Made with {{ loveDots }} by <span style="color:#191919">Samuele Marzola</span></span><span>Privacy · Cookie</span></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;galleryCols&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:3,&quot;max&quot;:5,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Galleria talent&quot;}}">
+const h=React.createElement;
+const NAMES=['Sofia Cerio','Alice Basso','Mickel Bura','Martina Damex','Youaremy Lemonade','Chiara Pieri','Totta','Giovanni Brugnoli','Basic Gaia','Charlie Moon','Stacey Woodfield','Nino','Haiyan Fu','Emma De Longis','Pietro Civera','Andrea Capodanno','Dayoung Clementi','Oks Dane','Georgette Polizzi','Carpita a Tutti','Vanni Oddera'];
+const VERT=['Lifestyle','Beauty','Fashion','Beauty','Lifestyle','Comedy','Wellness','Comedy','Lifestyle','Fashion','Fashion','Wellness','Comedy','Beauty','Lifestyle','Fashion','Wellness','Beauty','Fashion','Lifestyle','Comedy','Wellness'];
+const PHOTOS=['02','03','04','05','06','07','10'].map(n=>'assets/cutout-'+n+'.png');
+const slugify=n=>n.toLowerCase().replace(/[^a-z]+/g,'-');
+const TBG={'Sofia Cerio':'#FF915A','Alice Basso':'#8888D3','Mickel Bura':'#FF915A','Martina Damex':'#8888D3','Youaremy Lemonade':'#FF915A','Chiara Pieri':'#99DDC4','Totta':'#99DDC4','Giovanni Brugnoli':'#FF915A','Basic Gaia':'#8888D3','Charlie Moon':'#D6FA6E','Stacey Woodfield':'#FF915A','Nino':'#8888D3','Haiyan Fu':'#D6FA6E','Emma De Longis':'#8888D3','Pietro Civera':'#FF915A','Andrea Capodanno':'#8888D3','Dayoung Clementi':'#D6FA6E','Oks Dane':'#D6FA6E','Georgette Polizzi':'#99DDC4','Carpita a Tutti':'#8888D3','Vanni Oddera':'#FF915A'};
+const TAR={'stacey-woodfield':2.01,'nino':2.02,'haiyan-fu':2.02,'emma-de-longis':2.02,'carpita-a-tutti':2.01};
+const BGS=['#FF5560','#8888D3','#D6FA6E','#99DDC4','#FF915A','#DCE2EA'];
+const AR=['4/5','3/4','2/3','3/4','1/1','4/5','2/3','3/4'];
+const BIO={Beauty:'Racconta skincare e make-up con un linguaggio diretto: routine, prove e recensioni oneste.',Fashion:'Stile personale e ricerca. Il guardaroba come forma di racconto, dalla strada alle sfilate.',Lifestyle:'Quotidianità, viaggi e cultura pop raccontati con ironia e uno sguardo riconoscibile.',Wellness:'Allenamento, alimentazione e salute mentale, spiegati con metodo e senza promesse facili.',Comedy:'Sketch, format seriali e personaggi ricorrenti: comicità scritta per il feed, pronta per il palco.'};
+const fmt=k=>k>=1000?(k/1000).toFixed(1).replace('.',',')+'M':k+'K';
+const TAL=NAMES.map((name,k)=>{const bg=TBG[name]||BGS[k%6];const photo='assets/talent/'+slugify(name)+'.jpg';return{id:k,name,vertical:VERT[k],photo,pos:facePos(photo,.8),bg,fg:bg==='#7A4E35'?'#FAF7F2':'#191919',ar:AR[k%8],bio:BIO[VERT[k]],ig:60+((k*173)%840),tt:90+((k*311)%1900),yt:10+((k*97)%380)}});
+const CASES=[
+ {client:'Brand beverage',title:'Estate, in presa diretta',goal:'Lanciare la linea estiva tra i 18 e i 30 anni, con contenuti girati durante il tour.',creators:[0,4],contents:['3 Reel Instagram','Serie TikTok in 4 episodi','12 Stories'],results:[{n:'2,4M',l:'Visualizzazioni'},{n:'8,1%',l:'Engagement rate'},{n:'+38%',l:'Ricerche del brand'}],cover:'assets/talent-09.jpg',pos:'center 30%'},
+ {client:'Brand skincare',title:'Routine, riscritta',goal:'Presentare la nuova gamma dentro le routine quotidiane dei creator, senza copione.',creators:[1,3,13],contents:['6 Reel','Live shopping','Shooting campagna'],results:[{n:'1,1M',l:'Reach organica'},{n:'6,4%',l:'Engagement rate'},{n:'+22%',l:'Vendite online'}],tal:1},
+ {client:'Piattaforma streaming',title:'Cinque episodi',goal:'Lanciare una serie con un format comedy scritto dai talent.',creators:[5,7,12],contents:['Mini-serie in 5 episodi','Podcast dedicato','Evento di lancio'],results:[{n:'5,7M',l:'Visualizzazioni'},{n:'310K',l:'Condivisioni'},{n:'+64%',l:'Pre-registrazioni'}],cover:'assets/talent-08.jpg',pos:'center 45%'},
+ {client:'Maison fashion',title:'Fuori collezione',goal:'Portare la capsule fuori dalla passerella, nel guardaroba quotidiano dei creator.',creators:[2,9,10],contents:['Editorial fotografico','4 Reel','Backstage sfilata'],results:[{n:'3,2M',l:'Impression'},{n:'7,2%',l:'Engagement rate'},{n:'18',l:'Contenuti prodotti'}],tal:2}
+].map((c,i)=>{const t=c.tal!=null?TAL[c.tal]:null;return{...c,id:i,num:String(i+1).padStart(2,'0'),cover:t?t.photo:c.cover,bg:t?'#DCE2EA':'#191919',fg:t?'#191919':'#FAF7F2',fit:'cover',iw:t?'40%':'100%',pad:t?'108px':'0px',rad:t?'15px':'0px',panelBg:t?t.bg:'transparent',pos:t?'center 15%':c.pos,heroPos:t?'center 15%':c.pos,scrim:t?'none':'linear-gradient(180deg,rgba(25,25,25,0) 40%,rgba(25,25,25,.75) 100%)',creatorNames:c.creators.map(x=>TAL[x].name).join(', ')}});
+const LOGOS=["KIKO-Logo-300x96.png","Universal_Pictures_logo_2-300x170.png","UniCredit-Logo-300x169.png","logo_dark_hq3-300x114.webp","paramount-logo-D0604AF7D3-seeklogo.com_.png","zalando-prive-come-funziona-300x158.png","Nomination-Logo-1-300x80.png","Logo_Ufficiale_UniPegaso-300x236.png","MSGM-logo.png","NYX_Professional_Makeup_Logo-300x169.png","2560px-Lancome_logo.svg-300x72.png","logo-dark-300x114.png","Sky_TV_Logo-300x188.png","1200px-Sky_WiFi_logo_2020-300x66.png","dodo_logo_1-300x119.png","Maybelline_logo-300x28.png","Now_logo.svg-300x93.png","luisa-via-roma-1080x628-1-300x174.png","Tod_s-logo-852EB8F418-seeklogo.com_.png","627b6731d0205f124c9bcf58-300x84.png","unnamed-300x300.png","Logo_mulino_bianco_mono_P4695C_f_lr-300x252.webp","58480a5fcef1014c0b5e4919-300x151.png","Paramount_Pictures_Corporation_logo.svg-300x236.png","ringo-300x173.png","2560px-Kellogg_s-Logo.svg-300x105.png","Wallapop.svg-300x117.png","MAC-Cosmetics-logo-300x169.png","Eurovision_Song_Contest_logo.svg-300x95.png","Fonzies-300x300.png","Logo_campari-300x96.png","Italian-Serie-A-Logo-300x169.png","Davines-Logo-300x121.png","Valentino_logo.svg-300x148.png","TooFaced-Logo-300x169.png","MSI-Logo-300x169.png","mcdonalds-png-logo-simple-m-1-300x225.png","NIVEA_logo_2021.svg-300x300.png"].map(f=>'https://www.auroramgmt.it/wp-content/uploads/2023/11/'+f);
+const LIGHT=['mcdonalds','TooFaced','Wallapop'];
+const logoFilter=src=>LIGHT.some(k=>src.includes(k))?'brightness(0)':'grayscale(1) contrast(1.6) brightness(.9)';
+const FACE={'02':[49,32],'03':[48,43],'04':[48,32],'05':[33,30],'06':[54,39],'07':[52,44],'10':[48,27]};
+function facePos(src,boxAR,imgAR=1.5){let fx,fy;const m=src.match(/cutout-(\d+)/);const t=src.match(/assets\/talent\/([a-z-]+)\.jpg/);if(m){[fx,fy]=FACE[m[1]]}else if(t){fx=50;fy=TAR[t[1]]?27:30;imgAR=TAR[t[1]]||1.78}else return null;const v=Math.min(1,boxAR/imgAR);if(v>=1)return fx+'% 50%';const st=Math.max(0,Math.min(1-v,fy/100-v/2));return fx+'% '+Math.round(st/(1-v)*100)+'%'};
+const HOME=[{id:0,gc:'1 / 6',mt:0,ar:'4/5'},{id:1,gc:'7 / 10',mt:180,ar:'3/4'},{id:5,gc:'10 / 13',mt:40,ar:'2/3'},{id:2,gc:'2 / 5',mt:0,ar:'3/4'},{id:3,gc:'6 / 9',mt:120,ar:'4/5'},{id:6,gc:'9 / 13',mt:-40,ar:'1/1'}];
+const SLIDES=[{src:'assets/talent-09.jpg',pos:'center 35%'},{src:'assets/talent-08.jpg',pos:'center 40%'},{src:'assets/talent-09.jpg',pos:'70% 60%'},{src:'assets/talent-08.jpg',pos:'center 70%'}];
+
+function HeroReel({motion}){
+  const [i,setI]=React.useState(0);
+  React.useEffect(()=>{const t=setInterval(()=>setI(x=>(x+1)%SLIDES.length),5600);return()=>clearInterval(t)},[]);
+  return h('div',{style:{position:'absolute',inset:0,overflow:'hidden'}},
+    SLIDES.map((s,k)=>h('div',{key:k,style:{position:'absolute',inset:0,background:s.bg||'#191919',opacity:k===i?1:0,transition:'opacity 1.8s cubic-bezier(.22,1,.36,1)'}},
+      h('img',{src:s.src,alt:'',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:s.fit||'cover',objectPosition:s.pos,filter:'grayscale(1) contrast(1.05)',animation:motion&&k===i?'kb 8s linear forwards':'none'}}))),
+    h('div',{style:{position:'absolute',inset:0,background:'linear-gradient(180deg,rgba(25,25,25,.45) 0%,rgba(25,25,25,0) 22%,rgba(25,25,25,.15) 50%,rgba(25,25,25,.82) 100%)'}}));
+}
+function Globe({size=600,color='#FAF7F2',opacity=.3,style,spin=120}){
+  const c=size/2,r=c-2,sets=[18,-38,72];
+  const g=sets.map((rot,si)=>{const els=[];for(let k=1;k<=6;k++)els.push(h('ellipse',{key:'m'+k,cx:c,cy:c,rx:r*Math.abs(Math.cos(k*Math.PI/13)),ry:r}));
+    for(const lat of [-60,-35,-12,12,35,60]){const a=lat*Math.PI/180,rx=r*Math.cos(a);els.push(h('ellipse',{key:'p'+lat,cx:c,cy:c+r*Math.sin(a),rx,ry:rx*.24}))}
+    return h('g',{key:si,transform:'rotate('+rot+' '+c+' '+c+')'},els)});
+  return h('div',{'aria-hidden':true,style:{position:'absolute',width:size,height:size,pointerEvents:'none',opacity,zIndex:1,...style}},
+    h('svg',{viewBox:'0 0 '+size+' '+size,width:size,height:size,fill:'none',stroke:color,strokeWidth:1,style:{display:'block',animation:'spin '+spin+'s linear infinite'}},
+      h('circle',{cx:c,cy:c,r}),g));
+}
+function Ring({size=520,color='#FAF7F2',style,spin=40}){
+  const id=React.useMemo(()=>'rg'+Math.random().toString(36).slice(2,8),[]);const c=size/2;
+  return h('div',{'aria-hidden':true,style:{position:'absolute',width:size,height:size,pointerEvents:'none',zIndex:1,...style}},
+    h('svg',{viewBox:'0 0 '+size+' '+size,width:size,height:size,fill:'none',style:{display:'block',animation:'spin '+spin+'s linear infinite'}},
+      h('defs',null,h('linearGradient',{id,x1:'0',y1:'0',x2:'1',y2:'1'},h('stop',{offset:'0%',stopColor:color,stopOpacity:1}),h('stop',{offset:'100%',stopColor:color,stopOpacity:0}))),
+      h('circle',{cx:c,cy:c,r:c-1.5,stroke:'url(#'+id+')',strokeWidth:1.5})));
+}
+function HeroBadge(){
+  const txt='AURORA MGMT · MILANO · QUALITY OVER QUANTITY · ';
+  return h('div',{style:{position:'absolute',right:56,bottom:220,width:148,height:148,zIndex:2}},
+    h('div',{style:{position:'absolute',inset:0,borderRadius:'50%',background:'#FF5560',animation:'spin 24s linear infinite'}},
+      h('svg',{viewBox:'0 0 148 148',width:148,height:148,style:{display:'block'}},
+        h('defs',null,h('path',{id:'aur-bp',d:'M74,74 m-54,0 a54,54 0 1,1 108,0 a54,54 0 1,1 -108,0'})),
+        h('text',{style:{font:'500 8px var(--font-display)',letterSpacing:'.12em',fill:'#191919'}},h('textPath',{href:'#aur-bp',textLength:336},txt)))),
+    h('div',{style:{position:'absolute',left:'50%',top:'50%',width:40,height:40,marginLeft:-20,marginTop:-20,borderRadius:'50%',border:'1.5px solid #191919'}}));
+}
+function Marquee(){
+  const row=[...LOGOS,...LOGOS];
+  return h('div',{style:{overflow:'hidden',maskImage:'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)'}},
+    h('div',{style:{display:'flex',alignItems:'center',gap:80,width:'max-content',animation:'mq 160s linear infinite'}},
+      row.map((src,k)=>h('div',{key:k,style:{flex:'none',width:132,height:60,display:'flex',alignItems:'center',justifyContent:'center'}},
+        h('img',{src,alt:'',loading:'lazy',style:{maxWidth:'100%',maxHeight:'100%',objectFit:'contain',filter:logoFilter(src),opacity:.85,mixBlendMode:'multiply'}})))));
+}
+
+class Component extends DCLogic {
+  state={ih:null,mx:0,my:0,page:'home',tid:0,cid:0,filter:'Tutti',hov:null,y:0,ctype:'Brand',sent:false};
+  componentDidMount(){this.onScroll=()=>this.setState({y:window.scrollY});window.addEventListener('scroll',this.onScroll,{passive:true})}
+  componentWillUnmount(){window.removeEventListener('scroll',this.onScroll)}
+  go(page,extra){this.setState({page,hov:null,...extra});window.scrollTo(0,0)}
+  goProduction(){this.go('production')}
+  idxMove(e){const r=e.currentTarget.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;if(this._raf)return;this._raf=requestAnimationFrame(()=>{this._raf=null;this.setState({mx,my})})}
+  tile(t,extra){const on=this.state.hov===t.id;return{...t,...extra,bg:on?t.bg:'#EAEEF2',dot:t.bg,ov:on?1:0,tyb:on?0:8,ty:on?0:-8,sc:on?1.04:1,open:()=>this.go('talentDetail',{tid:t.id}),enter:()=>this.setState({hov:t.id}),leave:()=>this.setState({hov:null})}}
+  caseVals(c){return{...c,open:()=>this.go('case',{cid:c.id})}}
+  renderVals(){
+    const s=this.state,p=s.page;
+    const dark=p==='home'&&s.y<(typeof window!=='undefined'?window.innerHeight-90:600);
+    const hdr=dark?{bg:'transparent',fg:'#FAF7F2',btn:'bianco',line:'transparent',logo:'assets/logo-white.png'}:{bg:'rgba(250,247,242,.92)',fg:'#191919',btn:'#191919',line:'rgba(25,25,25,.12)',logo:'assets/logo-black.png'};
+    const sect={talent:'talent',talentDetail:'talent',works:'works',case:'works',contact:'contact',production:'production',team:'team',join:'team'}[p];
+    const navDef=[['Talent','talent'],['Lavori','works'],['Production','production'],['Team','team'],['Contatti','contact']];
+    const nav=navDef.map(([label,k])=>({label,line:sect===k?(dark?'#FAF7F2':'#191919'):'transparent',go:()=>this.go(k)}));
+    const V=['Tutti','Beauty','Fashion','Lifestyle','Wellness','Comedy'];
+    const filters=V.map(v=>({label:v+' '+(v==='Tutti'?TAL.length:TAL.filter(t=>t.vertical===v).length),variant:s.filter===v?'solid':'outline',pick:()=>this.setState({filter:v})}));
+    const list=TAL.filter(t=>s.filter==='Tutti'||t.vertical===s.filter);
+    const t=TAL[s.tid];
+    const tc=CASES.find(c=>c.creators.includes(t.id))||CASES[t.id%4];
+    const other=TAL[(t.id+3)%TAL.length];
+    const cs=CASES[s.cid];
+    const ORG={Brand:'Azienda',Creator:'Profilo social',Stampa:'Testata',Altro:'Organizzazione'};
+    return {
+      hdr,nav,
+      isHome:p==='home',isTalent:p==='talent',isTalentDetail:p==='talentDetail',isWorks:p==='works',isCase:p==='case',isContact:p==='contact',isProduction:p==='production',isJoin:p==='join',isTeam:p==='team',goTeam:()=>this.go('team'),
+      team:[['CEO & Founder','#FF5560'],['Head of Talent','#8888D3'],['Talent Manager','#D6FA6E'],['Brand Partnership Manager','#99DDC4'],['Head of Production','#FF915A'],['Social Media Manager','#DCE2EA']].map(([role,c],i)=>({role,c,mt:i%3===1?96:0})),
+      values:[{t:'Unicità',c:'#FF5560',d:'Scegliamo creator con uno sguardo proprio e lo proteggiamo in ogni progetto.'},{t:'Trasparenza',c:'#8888D3',d:'Condizioni chiare con talent e brand, dal preventivo al report finale.'},{t:'Performance',c:'#99DDC4',d:'Misuriamo ogni campagna e condividiamo i numeri, anche quando sono scomodi.'}],showCta:p!=='contact'&&p!=='join',goJoin:()=>this.go('join'),
+      goHome:()=>this.go('home'),goTalent:()=>this.go('talent'),goWorks:()=>this.go('works'),goContact:()=>this.go('contact'),goProduction:()=>this.goProduction(),
+      heroBadge:h(HeroBadge),loveDots:h('span',{'aria-label':'love',title:'Due orbite, un cuore',style:{position:'relative',display:'inline-block',width:16,height:15,animation:'beat 1.6s cubic-bezier(.22,1,.36,1) infinite'}},
+        h('span',{style:{position:'absolute',left:0,top:0,width:9,height:9,borderRadius:'50%',background:'#FF5560'}}),
+        h('span',{style:{position:'absolute',left:7,top:0,width:9,height:9,borderRadius:'50%',background:'#FF5560'}}),
+        h('span',{style:{position:'absolute',left:3.5,top:3,width:9,height:9,background:'#FF5560',transform:'rotate(45deg)',borderRadius:'0 0 2px 0'}})),featGlobe:h(Globe,{size:760,color:'#191919',opacity:.35,spin:140,style:{left:'50%',top:'50%',marginLeft:-380,marginTop:-380,zIndex:0}}),prodPageGlobe:h(Globe,{size:760,opacity:.25,style:{right:-200,top:-160}}),
+      pillars:[{l:'Unicità',c:'#FF5560'},{l:'Trasparenza',c:'#8888D3'},{l:'Performance',c:'#99DDC4'}],
+      backstage:[{src:'assets/talent-08.jpg',bg:'#191919',ar:'4/5',pos:'center 40%'},{src:'assets/talent-09.jpg',bg:'#191919',ar:'3/4',pos:'center 30%'},{src:PHOTOS[4],bg:'#99DDC4',ar:'2/3',pos:'center bottom'}],
+      podcasts:[{title:'Fuori formato',host:TAL[5].name,eps:24,photo:TAL[5].photo,bg:'#FF915A'},{title:'Prima persona',host:TAL[0].name,eps:18,photo:TAL[0].photo,bg:'#D6FA6E'},{title:'Ritmo',host:TAL[6].name,eps:12,photo:TAL[6].photo,bg:'#8888D3'}],
+      videos:[0,2,3,1].map(i=>{const c=CASES[i];return{...this.caseVals(c),pos:facePos(c.cover,.5625)||c.pos,format:['Spot + cutdown social','Mini-serie','Backstage sfilata','Branded content'][[0,2,3,1].indexOf(i)]}}),
+      jobs:[{role:'Talent Manager',meta:'Milano · Full time'},{role:'Brand Partnership Specialist',meta:'Milano · Full time'},{role:'Video Editor',meta:'Milano · Freelance'},{role:'Stage Social Media',meta:'Milano · 6 mesi'}],heroGlobe:h(Globe,{size:680,style:{right:-140,top:'6%'}}),prodGlobe:h(Globe,{size:620,opacity:.22,style:{right:-180,top:-200}}),detailRing:h(Ring,{size:560,color:'#FAF7F2',style:{top:'14%',left:'-20%'}}),caseGlobe:h(Globe,{size:720,color:CASES[s.cid].fg,opacity:.28,style:{right:-120,top:-80}}),wmHl:[[0,1],[1,3]],
+      index:TAL.slice(0,12).map(x=>({...x,col:s.ih==null?'#191919':s.ih===x.id?'#FF5560':'rgba(25,25,25,.22)',open:()=>this.go('talentDetail',{tid:x.id}),enter:()=>this.setState({ih:x.id})})),
+      fp:{x:s.mx,y:s.my,o:s.ih==null?0:1,s:s.ih==null?.92:1,photo:TAL[s.ih??0].photo,bg:TAL[s.ih??0].bg},
+      moreCount:TAL.length-12,idxMove:e=>this.idxMove(e),idxLeave:()=>this.setState({ih:null}),
+      heroReel:h(HeroReel,{motion:this.props.heroMotion??true}),marquee:h(Marquee),
+      areas:[
+        {n:'01',title:'Talent Management',text:'Seguiamo creator con uno sguardo riconoscibile: posizionamento, contratti, crescita nel tempo.',cta:'Il roster',go:()=>this.go('talent')},
+        {n:'02',title:'Influencer Marketing',text:'Campagne costruite sul linguaggio di chi le firma. Dal brief ai numeri finali.',cta:'I lavori',go:()=>this.go('works')},
+        {n:'03',title:'Production',text:'Showreel, backstage, podcast e video. Scriviamo, giriamo e montiamo in casa.',cta:'Aurora Production',go:()=>this.goProduction()}],
+      talentCount:TAL.length,
+      homeTalent:HOME.map(l=>this.tile(TAL[l.id],{gc:l.gc,mt:l.mt,ar:l.ar})),
+      feat:{...this.caseVals(CASES[0]),lead:TAL[CASES[0].creators[0]].photo,leadBg:TAL[CASES[0].creators[0]].bg},homeCases:[CASES[1],CASES[3]].map(c=>({...this.caseVals(c),pos:facePos(c.cover,1.25)||c.pos})),
+      prod:[{n:'01',title:'Showreel',text:'L’agenzia e i suoi talent, in tre minuti.'},{n:'02',title:'Backstage',text:'Dietro le quinte di shooting, campagne ed eventi.'},{n:'03',title:'Podcast',text:'Format audio e video condotti dai nostri creator.'},{n:'04',title:'Produzioni video',text:'Spot, branded content e serie per i brand.'}],
+      filters,shownCount:list.length,cols:this.props.galleryCols??4,
+      gallery:list.map(x=>this.tile(x)),
+      tal:{...t,stats:[{n:fmt(t.ig),l:'Instagram'},{n:fmt(t.tt),l:'TikTok'},{n:fmt(t.yt),l:'YouTube'}]},
+      collabs:[0,1,2,3,4,5].map(k=>{const src=LOGOS[(t.id*5+k*7)%LOGOS.length];return{src,f:logoFilter(src)}}),
+      talCase:{...this.caseVals(tc),results:tc.results.slice(0,2)},
+      talGallery:[{src:t.photo,bg:t.bg,ar:'4/5',pos:'center bottom'},{src:'assets/talent-09.jpg',bg:'#191919',ar:'3/4',pos:'center 30%'},{src:other.photo,bg:other.bg,ar:'2/3',pos:'center bottom'}],
+      nextTal:{...TAL[(t.id+1)%TAL.length],open:()=>this.go('talentDetail',{tid:(t.id+1)%TAL.length})},
+      cases:CASES.map((c,i)=>({...this.caseVals(c),pos:facePos(c.cover,.75)||c.pos,imgOrder:i%2?3:1,cols:i%2?'minmax(0,5fr) minmax(0,7fr)':'minmax(0,7fr) minmax(0,5fr)'})),
+      cs:{...cs,creators:cs.creators.map(x=>({name:TAL[x].name,open:()=>this.go('talentDetail',{tid:x})})),
+        media:[{src:cs.cover,bg:cs.bg,ar:'16/9',pos:cs.pos,label:'Video campagna'},...cs.creators.slice(0,2).map(x=>({src:TAL[x].photo,bg:TAL[x].bg,ar:'9/16',pos:'center bottom',label:'Reel · '+TAL[x].name}))]},
+      nextCase:{...CASES[(s.cid+1)%CASES.length],open:()=>this.go('case',{cid:(s.cid+1)%CASES.length})},
+      ctypes:['Brand','Stampa','Altro'].map(l=>({label:l,variant:s.ctype===l?'solid':'outline',pick:()=>this.setState({ctype:l})})),
+      orgLabel:ORG[s.ctype],sent:s.sent,notSent:!s.sent,send:()=>this.setState({sent:true}),reset:()=>this.setState({sent:false}),
+      contacts:[{l:'Brand e partnership',v:'brand@auroratalentagency.it'},{l:'Talent e scouting',v:'talent@auroratalentagency.it'},{l:'Stampa',v:'press@auroratalentagency.it'},{l:'Telefono',v:'(+39) 3469742330'},{l:'Sede',v:'Via Francesco Albani 55, 20148 Milano (MI)'}]
+    };
+  }
+}
+</script>
+</body>
+</html>

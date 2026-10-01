@@ -1,0 +1,29 @@
+/* Aurora colour tokens — sampled from brand mockups (banner, social, stationery) */
+:root{
+--aurora-viola:#8888D3;--aurora-viola-texture:#7C7CCE;--aurora-viola-light:#ABABE6;--aurora-viola-deep:#3D3DB3;
+--aurora-rosso:#FF5560;--aurora-rosso-soft:#F59AA2;
+--aurora-lime:#D6FA6E;
+--aurora-arancio:#FF915A;
+--aurora-menta:#A8DCC8;
+--aurora-blu-notte:#1E3662;
+--aurora-magenta:#EA6197;--aurora-lilla:#AE84C3;
+--aurora-nero:#191919;--aurora-carbone:#242424;--aurora-grafite:#3A3A3A;
+--aurora-grigio-600:#6B6B6B;--aurora-grigio-300:#BDBDBD;--aurora-carta:#D9D9D9;--aurora-nebbia:#EDEDF2;--aurora-bianco:#FFFFFF;
+/* semantic */
+--bg-page:var(--aurora-nero);--bg-page-light:var(--aurora-bianco);
+--surface-card:var(--aurora-carbone);--surface-card-light:var(--aurora-nebbia);--surface-paper:var(--aurora-carta);
+--fg-1:#FFFFFF;--fg-2:rgba(255,255,255,.72);--fg-3:rgba(255,255,255,.48);
+--fg-ink-1:var(--aurora-nero);--fg-ink-2:#4A4A4A;--fg-ink-3:#7A7A7A;
+--text-body:var(--fg-1);--text-muted:var(--fg-2);--text-on-accent:var(--aurora-nero);
+--accent-primary:var(--aurora-viola);--accent-hot:var(--aurora-rosso);--accent-electric:var(--aurora-lime);--accent-warm:var(--aurora-arancio);--accent-cool:var(--aurora-menta);
+--line-hair:rgba(255,255,255,.55);--line-subtle:rgba(255,255,255,.16);--line-ink:rgba(25,25,25,.16);
+--focus-ring:var(--aurora-lime);
+--state-success:var(--aurora-menta);--state-warning:var(--aurora-arancio);--state-danger:var(--aurora-rosso);--state-info:var(--aurora-viola);
+/* signature gradients (always used with grain) */
+--gradient-aurora:linear-gradient(180deg,#A9D8E8 0%,#AE84C3 30%,#EA6197 62%,#FF5560 82%,#191919 100%); /* @kind color */
+--gradient-story-viola:linear-gradient(180deg,#AE84C3 0%,#8888D3 35%,#575D9F 60%,#191919 100%); /* @kind color */
+--gradient-story-rosso:linear-gradient(180deg,#EA6197 0%,#E25F95 30%,#C9425E 60%,#191919 100%); /* @kind color */
+--gradient-story-notte:linear-gradient(180deg,#1E3662 0%,#3659A8 45%,#6E8CC6 75%,#D9D9D9 100%); /* @kind color */
+--gradient-story-pesca:linear-gradient(180deg,#F59AA2 0%,#FFC7C0 50%,#EDEDED 100%); /* @kind color */
+--scrim-bottom:linear-gradient(180deg,rgba(25,25,25,0) 0%,rgba(25,25,25,.85) 100%); /* @kind color */
+}

@@ -1,0 +1,3 @@
+.aurora-grain{position:relative;isolation:isolate}
+.aurora-grain::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:var(--grain-opacity);mix-blend-mode:overlay;background-image:url("../assets/textures/grain.png");background-size:220px}
+.aurora-texture-viola{background:var(--aurora-viola-texture) url("../assets/textures/sfondo-viola.jpg") center/cover}

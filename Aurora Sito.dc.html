@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/colors.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/typography.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/tokens/base.css">
+<link rel="stylesheet" href="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap">
+<script src="_ds/aurora-design-system-0854e824-a7a3-4537-9738-f180f460a5ef/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#F3EDE4;-webkit-font-smoothing:antialiased}
+a{color:#1E1915;text-decoration:underline;text-underline-offset:4px}a:hover{color:#FF5560}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.14)}}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+<div style="background:#F3EDE4;color:#1E1915;min-height:100vh;font-family:var(--font-text)">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;height:84px;padding:0 56px;display:flex;align-items:center;justify-content:space-between;gap:48px;background:{{ hdr.bg }};border-bottom:1px solid {{ hdr.line }};color:{{ hdr.fg }};backdrop-filter:blur(14px);transition:background .3s,color .3s">
+  <div onClick="{{ goHome }}" style="cursor:pointer;display:flex;align-items:center;height:84px">
+    <img src="{{ hdr.logo }}" alt="Aurora" style="height:24px;display:block">
+  </div>
+  <nav style="display:flex;align-items:center;gap:clamp(20px,3vw,44px);min-width:0">
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+      <span onClick="{{ n.go }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid {{ n.line }}">{{ n.label }}</span>
+    </sc-for>
+    <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="outline" size="sm" color="{{ hdr.fg }}" onClick="{{ goContact }}" hint-size="150px,34px">Lavora con noi</x-import>
+  </nav>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Home" style="position:relative;height:100vh;min-height:760px;color:#F3EDE4;overflow:hidden;background:#1E1915">
+    {{ heroReel }}
+    <div style="position:absolute;left:56px;right:56px;bottom:52px;display:flex;flex-direction:column;gap:44px">
+      <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(84px,10.6vw,184px);line-height:.88;letter-spacing:-.025em;max-width:11ch;text-wrap:balance">Representing creators <em style="font-style:italic;color:#FF5560">shaping culture</em></h1>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:32px;border-top:1px solid rgba(243,237,228,.45);padding-top:24px">
+        <div style="display:flex;gap:18px;align-items:center;font:500 13px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">
+          <span>Talent Management</span><span style="width:6px;height:6px;border-radius:50%;background:#FF5560"></span><span>Influencer Marketing</span><span style="width:6px;height:6px;border-radius:50%;background:#FF5560"></span><span>Production</span>
+        </div>
+        <div onClick="{{ goProduction }}" style="display:flex;align-items:center;gap:16px;cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">
+          <span>Guarda lo showreel</span>
+          <span style="width:52px;height:52px;border-radius:50%;border:1.5px solid #F3EDE4;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:12px solid #F3EDE4;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px"></span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;align-items:center;gap:56px;padding:34px 0 34px 56px;border-bottom:1px solid rgba(30,25,21,.14)">
+    <span style="flex:none;font:500 11px/1.3 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259;width:120px">Hanno scelto Aurora</span>
+    <div style="flex:1;min-width:0">{{ marquee }}</div>
+  </section>
+
+  <section style="padding:180px 56px 160px;display:flex;flex-direction:column;gap:120px">
+    <p style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:clamp(44px,4.6vw,76px);line-height:1.04;letter-spacing:-.015em;max-width:20ch;text-wrap:pretty">Un'agenzia creator-centrica: costruiamo progetti con i brand mettendo <em>il contenuto dei talent</em> al centro.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px">
+      <sc-for list="{{ areas }}" as="a" hint-placeholder-count="3">
+        <div onClick="{{ a.go }}" style="cursor:pointer;display:flex;flex-direction:column;gap:22px;border-top:1px solid #1E1915;padding-top:24px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;color:#FF5560">{{ a.n }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:40px;line-height:1">{{ a.title }}</span>
+          <span style="font-size:17px;line-height:1.55;color:#5A4F47;max-width:34ch">{{ a.text }}</span>
+          <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">{{ a.cta }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:0 56px 180px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:72px;gap:40px">
+      <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em">Il roster</h2>
+      <span onClick="{{ goTalent }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px;padding-bottom:12px">Tutti i {{ talentCount }} talent</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:24px;align-items:start">
+      <sc-for list="{{ homeTalent }}" as="t" hint-placeholder-count="6">
+        <div onClick="{{ t.open }}" onMouseEnter="{{ t.enter }}" onMouseLeave="{{ t.leave }}" style="grid-column:{{ t.gc }};margin-top:{{ t.mt }}px;position:relative;overflow:hidden;cursor:pointer;background:{{ t.bg }};aspect-ratio:{{ t.ar }}">
+          <img src="{{ t.photo }}" alt="{{ t.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;transform:scale({{ t.sc }});transform-origin:center bottom;transition:transform .7s cubic-bezier(.22,1,.36,1)">
+          <div style="position:absolute;left:24px;top:22px;right:24px;display:flex;flex-direction:column;gap:8px;color:{{ t.fg }};opacity:{{ t.ov }};transform:translateY({{ t.ty }}px);transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1)">
+            <span style="font-family:'Instrument Serif',Georgia,serif;font-size:40px;line-height:1">{{ t.name }}</span>
+            <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ t.vertical }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:0 0 180px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin:0 56px 72px;gap:40px">
+      <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em">I nostri lavori</h2>
+      <span onClick="{{ goWorks }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px;padding-bottom:12px">Tutti i progetti</span>
+    </div>
+    <div onClick="{{ feat.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:32px">
+      <div style="height:82vh;min-height:560px;position:relative;overflow:hidden;background:{{ feat.bg }}">
+        <img src="{{ feat.cover }}" alt="{{ feat.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ feat.fit }};object-position:{{ feat.pos }};filter:grayscale(1)">
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;padding:0 56px">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#FF5560">{{ feat.client }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.95;letter-spacing:-.01em">{{ feat.title }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;justify-content:flex-end">
+          <span style="font-size:17px;line-height:1.55;color:#5A4F47;max-width:44ch">{{ feat.goal }}</span>
+          <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Con {{ feat.creatorNames }}</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:120px 56px 0">
+      <sc-for list="{{ homeCases }}" as="c" hint-placeholder-count="2">
+        <div onClick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:24px">
+          <div style="aspect-ratio:4/5;position:relative;overflow:hidden;background:{{ c.bg }}">
+            <img src="{{ c.cover }}" alt="{{ c.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ c.fit }};object-position:{{ c.pos }};filter:grayscale(1)">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#FF5560">{{ c.client }}</span>
+            <span style="font-family:'Instrument Serif',Georgia,serif;font-size:40px;line-height:1">{{ c.title }}</span>
+            <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Con {{ c.creatorNames }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="production" style="background:#1E1915;color:#F3EDE4;padding:160px 56px">
+    <div style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:80px;align-items:end;margin-bottom:80px">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#FF5560">Aurora Production</span>
+        <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em">Dall'idea <em>al set.</em></h2>
+      </div>
+      <p style="margin:0;font-size:19px;line-height:1.55;color:rgba(243,237,228,.72);max-width:44ch;justify-self:end">La divisione che produce i contenuti dei nostri talent e dei brand: showreel, backstage, podcast e produzioni video.</p>
+    </div>
+    <div style="aspect-ratio:16/9;position:relative;overflow:hidden;background:#2A231E">
+      <img src="assets/talent-08.jpg" alt="Showreel" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:grayscale(1) brightness(.62)">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px">
+        <span style="width:104px;height:104px;border-radius:50%;border:1.5px solid #F3EDE4;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:22px solid #F3EDE4;border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px"></span></span>
+        <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Showreel 2026 — da produrre</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:56px">
+      <sc-for list="{{ prod }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid rgba(243,237,228,.3);padding-top:22px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;color:#FF5560">{{ p.n }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:36px;line-height:1">{{ p.title }}</span>
+          <span style="font-size:15px;line-height:1.5;color:rgba(243,237,228,.72)">{{ p.text }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isTalent }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Talent" style="padding:200px 56px 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:end">
+    <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Il roster</h1>
+    <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#5A4F47">Creator con un punto di vista, selezionati per unicità e qualità del racconto. {{ talentCount }} talent, cinque verticalità.</p>
+  </section>
+  <div style="position:sticky;top:84px;z-index:20;background:rgba(243,237,228,.94);backdrop-filter:blur(14px);padding:18px 56px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid rgba(30,25,21,.14)">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="6">
+      <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="sm" color="#1E1915" variant="{{ f.variant }}" onClick="{{ f.pick }}" hint-size="100px,34px">{{ f.label }}</x-import>
+    </sc-for>
+    <span style="margin-left:auto;white-space:nowrap;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">{{ shownCount }} risultati</span>
+  </div>
+  <section style="padding:48px 56px 180px;column-count:{{ cols }};column-gap:24px">
+    <sc-for list="{{ gallery }}" as="t" hint-placeholder-count="8">
+      <div onClick="{{ t.open }}" onMouseEnter="{{ t.enter }}" onMouseLeave="{{ t.leave }}" style="break-inside:avoid;margin-bottom:24px;position:relative;overflow:hidden;cursor:pointer;background:{{ t.bg }};aspect-ratio:{{ t.ar }}">
+        <img src="{{ t.photo }}" alt="{{ t.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;transform:scale({{ t.sc }});transform-origin:center bottom;transition:transform .7s cubic-bezier(.22,1,.36,1)">
+        <div style="position:absolute;left:22px;top:20px;right:22px;display:flex;flex-direction:column;gap:8px;color:{{ t.fg }};opacity:{{ t.ov }};transform:translateY({{ t.ty }}px);transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1)">
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:36px;line-height:1">{{ t.name }}</span>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ t.vertical }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isTalentDetail }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Scheda talent" style="padding:124px 56px 160px;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:80px;align-items:start">
+    <div style="position:sticky;top:108px;aspect-ratio:4/5;background:{{ tal.bg }};overflow:hidden">
+      <img src="{{ tal.photo }}" alt="{{ tal.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:56px;padding-top:48px">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span onClick="{{ goTalent }}" style="cursor:pointer;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Talent / <span style="color:#FF5560">{{ tal.vertical }}</span></span>
+        <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(72px,7.4vw,128px);line-height:.88;letter-spacing:-.02em">{{ tal.name }}</h1>
+        <p style="margin:0;font-size:19px;line-height:1.55;color:#5A4F47;max-width:40ch">{{ tal.bio }}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <sc-for list="{{ tal.stats }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #1E1915;padding-top:18px">
+              <span style="font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.9">{{ s.n }}</span>
+              <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ s.l }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <span style="font-size:13px;color:#6E6259">Follower aggiornati a settembre 2026 · aggiornamento mensile</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ tal.stats }}" as="s" hint-placeholder-count="3">
+          <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="outline" size="sm" color="#1E1915" hint-size="120px,34px">{{ s.l }}</x-import>
+        </sc-for>
+        <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" variant="solid" size="sm" color="#FF5560" onClick="{{ goContact }}" hint-size="200px,34px">Richiedi disponibilità</x-import>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Collaborazioni</span>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(30,25,21,.14)">
+          <sc-for list="{{ collabs }}" as="b" hint-placeholder-count="6">
+            <span style="height:84px;display:flex;align-items:center;border-bottom:1px solid rgba(30,25,21,.14);font:500 15px/1 var(--font-display);letter-spacing:.1em;color:#A2968B">{{ b }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#E5D9C6;padding:140px 56px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:80px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:28px;max-width:560px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#FF5560">Best practice · {{ talCase.client }}</span>
+      <h2 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(56px,6vw,96px);line-height:.92;letter-spacing:-.015em">{{ talCase.title }}</h2>
+      <p style="margin:0;font-size:18px;line-height:1.55;color:#5A4F47">{{ talCase.goal }}</p>
+      <div style="display:flex;gap:40px">
+        <sc-for list="{{ talCase.results }}" as="r" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'Instrument Serif',Georgia,serif;font-size:48px;line-height:1">{{ r.n }}</span><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ r.l }}</span></div>
+        </sc-for>
+      </div>
+      <span onClick="{{ talCase.open }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">Leggi il case study</span>
+    </div>
+    <div style="width:380px;aspect-ratio:9/16;position:relative;overflow:hidden;background:{{ tal.bg }};border-radius:18px">
+      <img src="{{ tal.photo }}" alt="Video ADV" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;filter:brightness(.7)">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#F3EDE4">
+        <span style="width:80px;height:80px;border-radius:50%;border:1.5px solid #F3EDE4;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:18px solid #F3EDE4;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px"></span></span>
+        <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Video ADV — embed</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:140px 56px 0;display:flex;flex-direction:column;gap:32px">
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Gallery</span>
+    <div style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:24px;align-items:end">
+      <sc-for list="{{ talGallery }}" as="g" hint-placeholder-count="3">
+        <div style="aspect-ratio:{{ g.ar }};position:relative;overflow:hidden;background:{{ g.bg }}">
+          <img src="{{ g.src }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ g.pos }};filter:grayscale(1)">
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section onClick="{{ nextTal.open }}" style="cursor:pointer;padding:160px 56px;display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Prossimo talent</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em" style-hover="color:#FF5560">{{ nextTal.name }}</span>
+    </div>
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;padding-bottom:14px">{{ nextTal.vertical }}</span>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isWorks }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Lavori" style="padding:200px 56px 120px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:end">
+    <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Lavori</h1>
+    <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#5A4F47">Progetti in cui il contenuto dei creator è il centro. Cliente, obiettivo, creator e risultati.</p>
+  </section>
+  <section style="padding:0 56px 100px;display:flex;flex-direction:column;gap:140px">
+    <sc-for list="{{ cases }}" as="c" hint-placeholder-count="4">
+      <div onClick="{{ c.open }}" style="cursor:pointer;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end">
+        <div style="order:{{ c.imgOrder }};aspect-ratio:4/3;position:relative;overflow:hidden;background:{{ c.bg }}">
+          <img src="{{ c.cover }}" alt="{{ c.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ c.fit }};object-position:{{ c.pos }};filter:grayscale(1)">
+        </div>
+        <div style="order:2;display:flex;flex-direction:column;gap:22px;padding-bottom:8px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#FF5560">{{ c.num }} · {{ c.client }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(48px,4.8vw,80px);line-height:.92;letter-spacing:-.01em">{{ c.title }}</span>
+          <span style="font-size:17px;line-height:1.55;color:#5A4F47;max-width:40ch">{{ c.goal }}</span>
+          <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Con {{ c.creatorNames }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isCase }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Case study" style="position:relative;height:92vh;min-height:680px;overflow:hidden;background:{{ cs.bg }};color:{{ cs.fg }}">
+    <img src="{{ cs.cover }}" alt="{{ cs.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ cs.fit }};object-position:{{ cs.heroPos }};filter:grayscale(1)">
+    <div style="position:absolute;inset:0;background:{{ cs.scrim }}"></div>
+    <div style="position:absolute;left:56px;right:56px;bottom:56px;display:flex;flex-direction:column;gap:24px">
+      <span style="font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Case study · {{ cs.client }}</span>
+      <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(84px,10vw,176px);line-height:.88;letter-spacing:-.025em;max-width:10ch">{{ cs.title }}</h1>
+    </div>
+  </section>
+  <section style="padding:120px 56px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #1E1915;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Cliente</span><span style="font-size:18px;line-height:1.5">{{ cs.client }}</span></div>
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #1E1915;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Obiettivo</span><span style="font-size:18px;line-height:1.5">{{ cs.goal }}</span></div>
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #1E1915;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Creator coinvolti</span>
+      <sc-for list="{{ cs.creators }}" as="k" hint-placeholder-count="2"><span onClick="{{ k.open }}" style="cursor:pointer;font-size:18px;line-height:1.5;text-decoration:underline;text-underline-offset:4px">{{ k.name }}</span></sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #1E1915;padding-top:20px"><span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Contenuti realizzati</span>
+      <sc-for list="{{ cs.contents }}" as="x" hint-placeholder-count="3"><span style="font-size:18px;line-height:1.5">{{ x }}</span></sc-for>
+    </div>
+  </section>
+  <section style="padding:0 56px 140px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px">
+    <sc-for list="{{ cs.results }}" as="r" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(88px,9vw,152px);line-height:.85;letter-spacing:-.02em">{{ r.n }}</span>
+        <span style="display:flex;align-items:center;gap:10px;font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase"><span style="width:6px;height:6px;border-radius:50%;background:#FF5560"></span>{{ r.l }}</span>
+      </div>
+    </sc-for>
+  </section>
+  <section style="padding:0 56px;display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end">
+    <sc-for list="{{ cs.media }}" as="m" hint-placeholder-count="3">
+      <div style="aspect-ratio:{{ m.ar }};position:relative;overflow:hidden;background:{{ m.bg }}">
+        <img src="{{ m.src }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ m.pos }};filter:grayscale(1) brightness(.78)">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#F3EDE4">
+          <span style="width:64px;height:64px;border-radius:50%;border:1.5px solid #F3EDE4;display:flex;align-items:center;justify-content:center"><span style="width:0;height:0;border-left:14px solid #F3EDE4;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></span></span>
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">{{ m.label }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+  <section onClick="{{ nextCase.open }}" style="cursor:pointer;padding:160px 56px;display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Prossimo progetto</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(72px,8vw,136px);line-height:.9;letter-spacing:-.02em" style-hover="color:#FF5560">{{ nextCase.title }}</span>
+    </div>
+    <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;padding-bottom:14px">{{ nextCase.client }}</span>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Contatti" style="padding:200px 56px 160px;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:120px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:64px">
+      <h1 style="margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(96px,13vw,220px);line-height:.85;letter-spacing:-.03em">Parliamo<span style="color:#FF5560">.</span></h1>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:40px">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Sei</span>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <sc-for list="{{ ctypes }}" as="c" hint-placeholder-count="4">
+                <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="md" color="#1E1915" variant="{{ c.variant }}" onClick="{{ c.pick }}" hint-size="130px,44px">{{ c.label }}</x-import>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Nome e cognome" tone="light" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Email" type="email" tone="light" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="{{ orgLabel }}" tone="light" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Budget o periodo (facoltativo)" tone="light" hint-size="100%,72px"></x-import>
+          </div>
+          <x-import component-from-global-scope="AuroraDesignSystem_0854e8.Input" label="Raccontaci il progetto" tone="light" hint-size="100%,72px"></x-import>
+          <div><x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="lg" variant="solid" color="#FF5560" onClick="{{ send }}" hint-size="160px,56px">Invia</x-import></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:20px;border-top:1px solid #1E1915;padding-top:28px">
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:56px;line-height:1">Grazie. Ti rispondiamo entro 48 ore.</span>
+          <span onClick="{{ reset }}" style="cursor:pointer;font:500 12px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:6px">Invia un altro messaggio</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:40px;padding-top:40px;min-width:0">
+      <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(30,25,21,.2);padding-top:18px">
+          <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">{{ c.l }}</span>
+          <span style="font-size:18px;line-height:1.5;overflow-wrap:anywhere">{{ c.v }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}">
+  <section onClick="{{ goContact }}" style="cursor:pointer;background:#FF5560;color:#1E1915;padding:140px 56px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:end">
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(84px,10vw,176px);line-height:.88;letter-spacing:-.025em;max-width:11ch">Parliamo del prossimo <em>progetto.</em></span>
+    <div style="display:flex;flex-direction:column;gap:14px;padding-bottom:14px;font-size:18px">
+      <span>brand@auroratalentagency.it</span>
+      <span>talent@auroratalentagency.it</span>
+    </div>
+  </section>
+</sc-if>
+
+<footer style="padding:80px 56px 40px;display:flex;flex-direction:column;gap:80px">
+  <div style="display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <img src="assets/logo-black.png" alt="Aurora" style="height:24px;width:auto;align-self:flex-start">
+      <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:#6E6259">Quality over quantity</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4"><span onClick="{{ n.go }}" style="cursor:pointer;font-size:16px" style-hover="color:#FF5560">{{ n.label }}</span></sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
+      <span>Instagram</span><span>TikTok</span><span>YouTube</span><span>LinkedIn</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:16px">
+      <span>Via Roma 1, Milano</span><span>(+39) 3469742330</span>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;gap:24px;border-top:1px solid rgba(30,25,21,.14);padding-top:24px;font-size:13px;color:#6E6259">
+    <span>Aurora Talent Agency s.r.l · Via Roma 1, Milano (Italy) · P.IVA 00000000000</span>
+    <span>Privacy · Cookie</span>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;galleryCols&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:3,&quot;max&quot;:5,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Galleria talent&quot;}}">
+const h=React.createElement;
+const NAMES=['Sofia Cerio','Alice Basso','Mickel Bura','Martina Damex','Youaremy','Lemonade','Chiara Pieri','Totta','Giovanni Brugnoli','Basic Gaia','Charlie Moon','Stacey Woodfield','Nino','Haiyan Fu','Emma De Longis','Pietro Civera','Andrea Capodanno','Dayoung Clementi','Oks Dane','Georgette Polizzi','Carpita a Tutti','Vanni Oddera'];
+const VERT=['Lifestyle','Beauty','Fashion','Beauty','Lifestyle','Comedy','Wellness','Comedy','Lifestyle','Fashion','Fashion','Wellness','Comedy','Beauty','Lifestyle','Fashion','Wellness','Beauty','Fashion','Lifestyle','Comedy','Wellness'];
+const PHOTOS=['02','03','04','05','06','07','10'].map(n=>'assets/cutout-'+n+'.png');
+const BGS=['#FF5560','#E5D9C6','#EDC9BB','#EFD58C','#7A4E35'];
+const AR=['4/5','3/4','2/3','3/4','1/1','4/5','2/3','3/4'];
+const BIO={Beauty:'Racconta skincare e make-up con un linguaggio diretto: routine, prove e recensioni senza filtri.',Fashion:'Stile personale e ricerca. Il guardaroba come forma di racconto, dalla strada alle sfilate.',Lifestyle:'Quotidianità, viaggi e cultura pop raccontati con ironia e uno sguardo riconoscibile.',Wellness:'Movimento, alimentazione e benessere mentale, con un approccio concreto e sostenibile.',Comedy:'Sketch, format seriali e personaggi ricorrenti: comicità scritta per il feed e oltre.'};
+const fmt=k=>k>=1000?(k/1000).toFixed(1).replace('.',',')+'M':k+'K';
+const TAL=NAMES.map((name,k)=>{const bg=BGS[k%5];return{id:k,name,vertical:VERT[k],photo:PHOTOS[k%7],bg,fg:bg==='#7A4E35'?'#F3EDE4':'#1E1915',ar:AR[k%8],bio:BIO[VERT[k]],ig:60+((k*173)%840),tt:90+((k*311)%1900),yt:10+((k*97)%380)}});
+const CASES=[
+ {client:'Brand beverage',title:'Estate, in presa diretta',goal:'Lanciare la linea estiva presso un pubblico 18–30 con contenuti nativi, girati durante il tour.',creators:[0,4],contents:['3 Reel Instagram','Serie TikTok in 4 episodi','12 Stories'],results:[{n:'2,4M',l:'Visualizzazioni'},{n:'8,1%',l:'Engagement rate'},{n:'+38%',l:'Ricerche del brand'}],cover:'assets/talent-09.jpg',pos:'center 30%'},
+ {client:'Brand skincare',title:'Routine, riscritta',goal:'Raccontare la nuova gamma attraverso routine reali, senza script, costruite con i creator.',creators:[1,3,13],contents:['6 Reel','Live shopping','Shooting campagna'],results:[{n:'1,1M',l:'Reach organica'},{n:'6,4%',l:'Engagement rate'},{n:'+22%',l:'Vendite online'}],tal:1},
+ {client:'Piattaforma streaming',title:'Cinque episodi',goal:'Promuovere il lancio di una serie con un format comedy originale scritto dai talent.',creators:[5,7,12],contents:['Mini-serie in 5 episodi','Podcast dedicato','Evento di lancio'],results:[{n:'5,7M',l:'Visualizzazioni'},{n:'310K',l:'Condivisioni'},{n:'+64%',l:'Pre-registrazioni'}],cover:'assets/talent-08.jpg',pos:'center 45%'},
+ {client:'Maison fashion',title:'Fuori collezione',goal:'Portare la capsule fuori dalla passerella, nel guardaroba quotidiano dei creator.',creators:[2,9,10],contents:['Editorial fotografico','4 Reel','Backstage sfilata'],results:[{n:'3,2M',l:'Impression'},{n:'7,2%',l:'Engagement rate'},{n:'18',l:'Contenuti prodotti'}],tal:2}
+].map((c,i)=>{const t=c.tal!=null?TAL[c.tal]:null;return{...c,id:i,num:String(i+1).padStart(2,'0'),cover:t?t.photo:c.cover,bg:t?t.bg:'#1E1915',fg:t?t.fg:'#F3EDE4',fit:t?'contain':'cover',pos:t?'center bottom':c.pos,heroPos:t?'right bottom':c.pos,scrim:t?'none':'linear-gradient(180deg,rgba(30,25,21,0) 40%,rgba(30,25,21,.75) 100%)',creatorNames:c.creators.map(x=>TAL[x].name).join(', ')}});
+const HOME=[{id:0,gc:'1 / 6',mt:0,ar:'4/5'},{id:1,gc:'7 / 10',mt:180,ar:'3/4'},{id:5,gc:'10 / 13',mt:40,ar:'2/3'},{id:2,gc:'2 / 5',mt:0,ar:'3/4'},{id:3,gc:'6 / 9',mt:120,ar:'4/5'},{id:6,gc:'9 / 13',mt:-40,ar:'1/1'}];
+const SLIDES=[{src:'assets/talent-09.jpg',pos:'center 35%',cap:'Backstage'},{src:'assets/talent-08.jpg',pos:'center 40%',cap:'Shooting'},{src:'assets/cutout-05.png',pos:'center bottom',cap:'Campagne',bg:'#FF5560',fit:'contain'},{src:'assets/talent-09.jpg',pos:'70% 60%',cap:'Eventi'},{src:'assets/cutout-03.png',pos:'center bottom',cap:'Podcast',bg:'#7A4E35',fit:'contain'},{src:'assets/talent-08.jpg',pos:'center 70%',cap:'Produzione'}];
+
+function HeroReel({motion}){
+  const [i,setI]=React.useState(0);
+  React.useEffect(()=>{const t=setInterval(()=>setI(x=>(x+1)%SLIDES.length),4200);return()=>clearInterval(t)},[]);
+  return h('div',{style:{position:'absolute',inset:0,overflow:'hidden'}},
+    SLIDES.map((s,k)=>h('div',{key:k,style:{position:'absolute',inset:0,background:s.bg||'#1E1915',opacity:k===i?1:0,transition:'opacity 1.2s cubic-bezier(.22,1,.36,1)'}},
+      h('img',{src:s.src,alt:'',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:s.fit||'cover',objectPosition:s.pos,filter:'grayscale(1) contrast(1.05)',animation:motion&&k===i?'kb 6s linear forwards':'none'}}))),
+    h('div',{style:{position:'absolute',inset:0,background:'linear-gradient(180deg,rgba(30,25,21,.45) 0%,rgba(30,25,21,0) 22%,rgba(30,25,21,.15) 50%,rgba(30,25,21,.82) 100%)'}}),
+    h('div',{style:{position:'absolute',top:112,right:56,display:'flex',gap:14,alignItems:'center',color:'#F3EDE4',font:'500 11px/1 var(--font-display)',letterSpacing:'.12em',textTransform:'uppercase'}},
+      h('span',{style:{width:8,height:8,borderRadius:'50%',background:'#FF5560'}}),
+      h('span',null,'Reel '+String(i+1).padStart(2,'0')+' / 06 — '+SLIDES[i].cap)));
+}
+function Marquee(){
+  const items=Array.from({length:10},(_,k)=>'LOGO '+String(k+1).padStart(2,'0'));
+  const row=[...items,...items];
+  return h('div',{style:{overflow:'hidden',maskImage:'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)'}},
+    h('div',{style:{display:'flex',gap:96,width:'max-content',animation:'mq 45s linear infinite'}},
+      row.map((l,k)=>h('span',{key:k,style:{font:'500 20px/1 var(--font-display)',letterSpacing:'.14em',color:'#A2968B',whiteSpace:'nowrap'}},l))));
+}
+
+class Component extends DCLogic {
+  state={page:'home',tid:0,cid:0,filter:'Tutti',hov:null,y:0,ctype:'Brand',sent:false};
+  componentDidMount(){this.onScroll=()=>this.setState({y:window.scrollY});window.addEventListener('scroll',this.onScroll,{passive:true})}
+  componentWillUnmount(){window.removeEventListener('scroll',this.onScroll)}
+  go(page,extra){this.setState({page,hov:null,...extra});window.scrollTo(0,0)}
+  goProduction(){this.go('home');setTimeout(()=>{const el=document.getElementById('production');if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-84,behavior:'smooth'})},60)}
+  tile(t,extra){const on=this.state.hov===t.id;return{...t,...extra,ov:on?1:0,ty:on?0:-8,sc:on?1.04:1,open:()=>this.go('talentDetail',{tid:t.id}),enter:()=>this.setState({hov:t.id}),leave:()=>this.setState({hov:null})}}
+  caseVals(c){return{...c,open:()=>this.go('case',{cid:c.id})}}
+  renderVals(){
+    const s=this.state,p=s.page;
+    const dark=p==='home'&&s.y<(typeof window!=='undefined'?window.innerHeight-90:600);
+    const hdr=dark?{bg:'transparent',fg:'#F3EDE4',line:'transparent',logo:'assets/logo-white.png'}:{bg:'rgba(243,237,228,.92)',fg:'#1E1915',line:'rgba(30,25,21,.12)',logo:'assets/logo-black.png'};
+    const sect={talent:'talent',talentDetail:'talent',works:'works',case:'works',contact:'contact'}[p];
+    const navDef=[['Talent','talent'],['Lavori','works'],['Production','production'],['Contatti','contact']];
+    const nav=navDef.map(([label,k])=>({label,line:sect===k?(dark?'#F3EDE4':'#1E1915'):'transparent',go:()=>k==='production'?this.goProduction():this.go(k)}));
+    const V=['Tutti','Beauty','Fashion','Lifestyle','Wellness','Comedy'];
+    const filters=V.map(v=>({label:v+' '+(v==='Tutti'?TAL.length:TAL.filter(t=>t.vertical===v).length),variant:s.filter===v?'solid':'outline',pick:()=>this.setState({filter:v})}));
+    const list=TAL.filter(t=>s.filter==='Tutti'||t.vertical===s.filter);
+    const t=TAL[s.tid];
+    const tc=CASES.find(c=>c.creators.includes(t.id))||CASES[t.id%4];
+    const other=TAL[(t.id+3)%TAL.length];
+    const cs=CASES[s.cid];
+    const ORG={Brand:'Azienda',Creator:'Profilo social',Stampa:'Testata',Altro:'Organizzazione'};
+    return {
+      hdr,nav,
+      isHome:p==='home',isTalent:p==='talent',isTalentDetail:p==='talentDetail',isWorks:p==='works',isCase:p==='case',isContact:p==='contact',showCta:p!=='contact',
+      goHome:()=>this.go('home'),goTalent:()=>this.go('talent'),goWorks:()=>this.go('works'),goContact:()=>this.go('contact'),goProduction:()=>this.goProduction(),
+      heroReel:h(HeroReel,{motion:this.props.heroMotion??true}),marquee:h(Marquee),
+      areas:[
+        {n:'01',title:'Talent Management',text:'Rappresentiamo creator con un punto di vista e ne costruiamo la carriera nel lungo periodo.',cta:'Il roster',go:()=>this.go('talent')},
+        {n:'02',title:'Influencer Marketing',text:'Progetti con i brand in cui il contenuto del creator è il fulcro, dalla strategia ai risultati.',cta:'I lavori',go:()=>this.go('works')},
+        {n:'03',title:'Production',text:'Showreel, backstage, podcast e produzioni video: dall’idea al montaggio, in casa.',cta:'Aurora Production',go:()=>this.goProduction()}],
+      talentCount:TAL.length,
+      homeTalent:HOME.map(l=>this.tile(TAL[l.id],{gc:l.gc,mt:l.mt,ar:l.ar})),
+      feat:this.caseVals(CASES[0]),homeCases:[CASES[1],CASES[3]].map(c=>this.caseVals(c)),
+      prod:[{n:'01',title:'Showreel',text:'Il racconto visivo dell’agenzia e dei suoi talent.'},{n:'02',title:'Backstage',text:'Dietro le quinte di shooting, campagne ed eventi.'},{n:'03',title:'Podcast',text:'Format audio e video condotti dai nostri creator.'},{n:'04',title:'Produzioni video',text:'Spot, branded content e serie per i brand.'}],
+      filters,shownCount:list.length,cols:this.props.galleryCols??4,
+      gallery:list.map(x=>this.tile(x)),
+      tal:{...t,stats:[{n:fmt(t.ig),l:'Instagram'},{n:fmt(t.tt),l:'TikTok'},{n:fmt(t.yt),l:'YouTube'}]},
+      collabs:['LOGO 01','LOGO 02','LOGO 03','LOGO 04','LOGO 05','LOGO 06'],
+      talCase:{...this.caseVals(tc),results:tc.results.slice(0,2)},
+      talGallery:[{src:t.photo,bg:t.bg,ar:'4/5',pos:'center bottom'},{src:'assets/talent-09.jpg',bg:'#1E1915',ar:'3/4',pos:'center 30%'},{src:other.photo,bg:other.bg,ar:'2/3',pos:'center bottom'}],
+      nextTal:{...TAL[(t.id+1)%TAL.length],open:()=>this.go('talentDetail',{tid:(t.id+1)%TAL.length})},
+      cases:CASES.map((c,i)=>({...this.caseVals(c),imgOrder:i%2?3:1})),
+      cs:{...cs,creators:cs.creators.map(x=>({name:TAL[x].name,open:()=>this.go('talentDetail',{tid:x})})),
+        media:[{src:cs.cover,bg:cs.bg,ar:'16/9',pos:cs.pos,label:'Video campagna'},...cs.creators.slice(0,2).map(x=>({src:TAL[x].photo,bg:TAL[x].bg,ar:'9/16',pos:'center bottom',label:'Reel · '+TAL[x].name}))]},
+      nextCase:{...CASES[(s.cid+1)%CASES.length],open:()=>this.go('case',{cid:(s.cid+1)%CASES.length})},
+      ctypes:['Brand','Creator','Stampa','Altro'].map(l=>({label:l,variant:s.ctype===l?'solid':'outline',pick:()=>this.setState({ctype:l})})),
+      orgLabel:ORG[s.ctype],sent:s.sent,notSent:!s.sent,send:()=>this.setState({sent:true}),reset:()=>this.setState({sent:false}),
+      contacts:[{l:'Brand e partnership',v:'brand@auroratalentagency.it'},{l:'Talent e scouting',v:'talent@auroratalentagency.it'},{l:'Stampa',v:'press@auroratalentagency.it'},{l:'Telefono',v:'(+39) 3469742330'},{l:'Sede',v:'Via Roma 1, Milano (Italy)'}]
+    };
+  }
+}
+</script>
+</body>
+</html>
