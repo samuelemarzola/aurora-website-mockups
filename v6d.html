@@ -172,7 +172,7 @@ a{color:#191919;text-decoration:underline;text-underline-offset:4px}a:hover{colo
   </div>
   <section style="padding:48px 56px 180px;column-count:{{ cols }};column-gap:24px">
     <sc-for list="{{ gallery }}" as="t" hint-placeholder-count="8">
-      <div onClick="{{ t.open }}" onMouseEnter="{{ t.enter }}" onMouseLeave="{{ t.leave }}" style="break-inside:avoid;margin-bottom:24px;position:relative;overflow:hidden;border-radius:15px;cursor:pointer;background:{{ t.bg }};transition:background .6s cubic-bezier(.22,1,.36,1);aspect-ratio:{{ t.ar }}">
+      <div onClick="{{ t.open }}" onMouseEnter="{{ t.enter }}" onMouseLeave="{{ t.leave }}" style="break-inside:avoid;margin-bottom:24px;position:relative;overflow:hidden;border-radius:0 15px 15px 15px;cursor:pointer;background:{{ t.bg }};transition:background .6s cubic-bezier(.22,1,.36,1);aspect-ratio:{{ t.ar }}">
         <img src="{{ t.photo }}" alt="{{ t.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ t.pos }};filter:{{ t.flt }};transform:scale({{ t.sc }});transform-origin:center bottom;transition:transform .7s cubic-bezier(.22,1,.36,1)">
         
         <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex;pointer-events:none"><div style="width:68px;height:36px;background:#FAF7F2;display:flex;align-items:center;gap:7px"><span style="width:13px;height:13px;border-radius:50%;background:{{ t.dot }}"></span><span style="width:13px;height:13px;border-radius:50%;background:{{ t.dot }}"></span></div><svg width="47" height="36" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
@@ -187,7 +187,7 @@ a{color:#191919;text-decoration:underline;text-underline-offset:4px}a:hover{colo
 
 <sc-if value="{{ isTalentDetail }}" hint-placeholder-val="{{ false }}">
   <section data-screen-label="Scheda talent" style="padding:124px 56px 160px;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:80px;align-items:start">
-    <div style="position:sticky;top:108px;aspect-ratio:4/5;background:{{ tal.bg }};overflow:hidden;border-radius:15px">
+    <div style="position:sticky;top:108px;aspect-ratio:4/5;background:{{ tal.bg }};overflow:hidden;border-radius:0 15px 15px 15px">
       <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex;pointer-events:none"><div style="width:112px;height:60px;background:#FAF7F2;display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:50%;background:{{ tal.bg }}"></span><span style="width:20px;height:20px;border-radius:50%;background:{{ tal.bg }}"></span></div><svg width="78" height="60" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
       <img src="{{ tal.photo }}" alt="{{ tal.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ tal.pos }};filter:grayscale(1) contrast(1.05)">
       
@@ -412,7 +412,7 @@ a{color:#191919;text-decoration:underline;text-underline-offset:4px}a:hover{colo
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
       <sc-for list="{{ podcasts }}" as="p" hint-placeholder-count="3">
         <div style="display:flex;flex-direction:column;gap:18px">
-          <div style="aspect-ratio:1/1;position:relative;overflow:hidden;border-radius:15px;background:{{ p.bg }}">
+          <div style="aspect-ratio:1/1;position:relative;overflow:hidden;border-radius:0 15px 15px 15px;background:{{ p.bg }}">
             <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:68px;height:36px;background:#DCE2EA;display:flex;align-items:center;gap:7px"><span style="width:13px;height:13px;border-radius:50%;background:{{ p.bg }}"></span><span style="width:13px;height:13px;border-radius:50%;background:{{ p.bg }}"></span></div><svg width="47" height="36" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#DCE2EA"></path></svg></div>
             <img src="{{ p.photo }}" alt="{{ p.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:grayscale(1) contrast(1.05)">
             
@@ -490,7 +490,7 @@ a{color:#191919;text-decoration:underline;text-underline-offset:4px}a:hover{colo
     <p style="margin:0 0 18px;font-size:18px;line-height:1.55;color:#4A4A4A">Cerchiamo creator con un punto di vista e persone che vogliono costruire con loro. Due strade, stessa cura.</p>
   </section>
   <section style="padding:0 56px 180px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch">
-    <div style="position:relative;overflow:hidden;border-radius:15px;background:#E6E3DD;padding:88px 48px 48px;display:flex;flex-direction:column;gap:32px">
+    <div style="position:relative;overflow:hidden;border-radius:0 15px 15px 15px;background:#E6E3DD;padding:88px 48px 48px;display:flex;flex-direction:column;gap:32px">
       <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:112px;height:60px;background:#FAF7F2;display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:50%;background:#E6E3DD"></span><span style="width:20px;height:20px;border-radius:50%;background:#E6E3DD"></span></div><svg width="78" height="60" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
       
       <div style="position:relative;display:flex;flex-direction:column;gap:18px">
@@ -507,7 +507,7 @@ a{color:#191919;text-decoration:underline;text-underline-offset:4px}a:hover{colo
       </div>
       <div style="position:relative;margin-top:auto;display:flex;flex-wrap:wrap;gap:12px"><x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="lg" variant="solid" color="#191919" hint-size="180px,56px">Candidati</x-import><x-import component-from-global-scope="AuroraDesignSystem_0854e8.Button" size="lg" variant="outline" color="#191919" hint-size="220px,56px">Allega mediakit</x-import></div>
     </div>
-    <div style="position:relative;overflow:hidden;border-radius:15px;background:#DCE2EA;padding:88px 48px 48px;display:flex;flex-direction:column;gap:32px">
+    <div style="position:relative;overflow:hidden;border-radius:0 15px 15px 15px;background:#DCE2EA;padding:88px 48px 48px;display:flex;flex-direction:column;gap:32px">
       <div aria-hidden="true" style="position:absolute;left:0;top:0;z-index:2;display:flex"><div style="width:112px;height:60px;background:#FAF7F2;display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:50%;background:#DCE2EA"></span><span style="width:20px;height:20px;border-radius:50%;background:#DCE2EA"></span></div><svg width="78" height="60" viewBox="0 0 52 40" style="display:block;margin-left:-1px"><path d="M0,0 H52 Q40,0 36,9 L20,31 Q15,40 3,40 H0 Z" fill="#FAF7F2"></path></svg></div>
       <div style="display:flex;flex-direction:column;gap:18px">
         <span style="font:500 11px/1 var(--font-display);letter-spacing:.12em;text-transform:uppercase">Per il team</span>
